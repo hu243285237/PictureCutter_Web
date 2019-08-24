@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8" />
+    <title>PictureCutter</title>
+    <style type="text/css">
+        #cutter_canvas {
+            border: 1px solid #964e4e;
+            background: #b1b1b1;;
+        }
+    </style>
+    </head>
+    <body>
+        <input id="upload_input" type="file" accept="image/*" onchange="ShowPreview(this)">
+        <img id="upload_img" src="#" width="300px" height="300px"></img>
+        <canvas id="cutter_canvas" width="798" height="1128"></canvas>
+        <script src="./main.js"></script>
+    </body>
+</html>
