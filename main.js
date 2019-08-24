@@ -26,21 +26,18 @@ function showPreview (source) {
 
 cut_button.addEventListener("click", cutPicture);
 
-// 对图像裁剪
+// 动态创建 canvas 并对图像裁剪
 function cutPicture () {
-    creatCanvas();
-}
-
-// 动态创建 canvas
-function creatCanvas () {
     var pageNum = getPageAmount(A4);
+    var cutterHeight = getCutterHeight(A4);
+    alert(cutterHeight);
     for (var i = 0; i < pageNum; i++) {
         var new_canvas = document.createElement("canvas");
         new_canvas.id = "cutter_canvas" + i;
-        new_canvas.width = 210;
-        new_canvas.height = 297;
+        new_canvas.width = upload_img.width;
+        new_canvas.height = cutterHeight;
         var ctx = new_canvas.getContext("2d");
-        ctx.drawImage(upload_img, 0, 0, 798, 1128, 0, 0, 798, 1128);
+        ctx.drawImage(upload_img, 0, cutterHeight * i, upload_img.width, cutterHeight, 0, 0, upload_img.width, cutterHeight);
         output_div.appendChild(new_canvas);
     }
 }
@@ -48,4 +45,9 @@ function creatCanvas () {
 // 计算图片将会切割成几页
 function getPageAmount (pageType) {
     return pageType * (upload_img.height / upload_img.width);
+}
+
+// 计算每次裁剪的高度值
+function getCutterHeight (pageType) {
+ return (1 / pageType) * upload_img.width;
 }
