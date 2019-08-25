@@ -30,15 +30,19 @@ cut_button.addEventListener("click", cutPicture);
 function cutPicture () {
     var pageNum = getPageAmount(A4);
     var cutterHeight = getCutterHeight(A4);
-    alert(cutterHeight);
     for (var i = 0; i < pageNum; i++) {
         var new_canvas = document.createElement("canvas");
         new_canvas.id = "cutter_canvas" + i;
         new_canvas.width = upload_img.width;
         new_canvas.height = cutterHeight;
+        new_canvas.style.transform = "scale(0.5, 0.5)"
         var ctx = new_canvas.getContext("2d");
-        ctx.drawImage(upload_img, 0, cutterHeight * i, upload_img.width, cutterHeight, 0, 0, upload_img.width, cutterHeight);
+        ctx.drawImage(upload_img, 0, cutterHeight * i, upload_img.width, cutterHeight, 0, 0, new_canvas.width, new_canvas.height);
         output_div.appendChild(new_canvas);
+        var download_a = document.createElement("a");
+        download_a.download = "下载";
+        download_a.href = new_canvas.toDataURL("image/png");
+        download_a.click();
     }
 }
 
