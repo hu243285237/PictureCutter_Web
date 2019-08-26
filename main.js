@@ -1,7 +1,6 @@
 // 得到各个元素
 var upload_input = document.getElementById("upload_input");
 var cut_button = document.getElementById("cut_button");
-var output_div = document.getElementById("outputFrame");
 var cutter_canvas = document.getElementById("cutter_canvas");
 
 // 各种纸尺寸大小的比例
@@ -20,11 +19,8 @@ function showPreview (source) {
             upload_img.src = e.target.result;
         };
         fileReader.readAsDataURL(file);
-        cut_button.style.display = "inline";
     }
 }
-
-cut_button.addEventListener("click", cutPicture);
 
 // 动态创建 canvas 并对图像裁剪和显示
 function cutPicture () {
@@ -35,10 +31,8 @@ function cutPicture () {
         new_canvas.id = "cutter_canvas" + i;
         new_canvas.width = upload_img.width;
         new_canvas.height = cutterHeight;
-        new_canvas.style.transform = "scale(0.5, 0.5)"
         var ctx = new_canvas.getContext("2d");
         ctx.drawImage(upload_img, 0, cutterHeight * i, upload_img.width, cutterHeight, 0, 0, new_canvas.width, new_canvas.height);
-        output_div.appendChild(new_canvas);
         downloadPicture(new_canvas);
     }
 }

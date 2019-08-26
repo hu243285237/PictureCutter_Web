@@ -1,5 +1,9 @@
 /* ----------------------------整体页面-------------------------------- */
 
+* {
+    text-align: center;
+}
+
 html, body {
     width: 100%;
     height: 100%;
@@ -11,7 +15,6 @@ html, body {
     width: 100%;
     height: 100%;
     margin: 0 auto;
-    background-color: cornsilk;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -23,7 +26,7 @@ html, body {
 #title_frame {
     width: 100%;
     height: 40%;
-    background-color: aliceblue;
+    background-color: rgb(50, 50, 50);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -33,24 +36,49 @@ html, body {
 #handle_frame {
     width: 100%;
     height: 60%;
-    background-color: gainsboro;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 
 /* -----------------------------标题部分------------------------------- */
 
 #title {
+    color: yellow;
     font-size: 78px;
-    text-align: center;
 }
 
 #introduce {
-    text-align: center;
+    color: white;
+    font-size: 22px;
 }
 
 /* -----------------------------操作部分-------------------------------- */
 
 #handle_frame_first {
+    width: 30%;
+    height: 100%;
+    background-color: beige;
+}
 
+#handle_frame_second {
+    width: 40%;
+    height: 100%;
+    background-color: beige;
+    border: 1px solid rgb(50, 50, 50);
+    border-top: none;
+    border-bottom: none;
+}
+
+#handle_frame_third {
+    width: 30%;
+    height: 100%;
+    background-color: beige;
+}
+
+.step_text {
+    font-size: 36px;
 }
 
 /* ------------------------------------------------------------ */
