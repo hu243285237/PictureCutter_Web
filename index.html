@@ -20,20 +20,20 @@
                     <h2 class="step_text">第二步</h2>
                     <div>
                         <span>裁剪比例：</span>
-                        <div><input name="pageType" type="radio" value="" checked="true" />A4(297*210)</div>
-                        <div><input name="pageType" type="radio" value="" />A3(420*297)</div>
-                        <div><input name="pageType" type="radio" value="" />自定义</div>
+                        <div><input name="pageType" type="radio" value="A4" checked="true" />A4(297*210)</div>
+                        <div><input name="pageType" type="radio" value="A3" />A3(420*297)</div>
+                        <div><input name="pageType" type="radio" value="customize" />自定义</div>
                     </div>
                     <br>
                     <div>
                         <span>导出图片格式：</span>
-                        <div><input name="pictureType" type="radio" value="" checked="true" />png</div>
-                        <div><input name="pictureType" type="radio" value="" />jpg</div>
+                        <div><input name="pictureType" type="radio" value="png" checked="true" />png</div>
+                        <div><input name="pictureType" type="radio" value="jpg" />jpg</div>
                     </div>
                 </div>
                 <div id="handle_frame_third">
                     <h2 class="step_text">第三步</h2>
-                    <button id="cut_button" onclick="cutPicture()">导出</button>
+                    <button id="cut_button" onclick="exportPicture()">导出</button>
                 </div>
             </div>
         </div>

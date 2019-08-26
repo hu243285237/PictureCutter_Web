@@ -1,10 +1,6 @@
 // 得到各个元素
 var app = document.getElementById("app");
 
-// 各种纸尺寸大小的比例
-const A4 = 210 / 297;
-const A3 = 297 / 420;
-
 // 图片的方向
 const HORIZONTAL = Symbol();
 const VERTICAL = Symbol();
@@ -25,7 +21,7 @@ function InitImage (source) {
 }
 
 // 动态创建 canvas 并对图像裁剪和显示
-function cutPicture () {
+function exportPicture () {
     var pageType = getInputPageType();
     var pageNum = getPageAmount(pageType);
     var cutterLength = getCutterLength(pageType);
@@ -97,7 +93,12 @@ function getRadioValue (radioName) {
     var radios = document.getElementsByName(radioName);
     for (let i = 0; i < radios.length; i++) {
         if (radios[i].checked) {
-            return radios[i].value;
+            let val;
+            switch (radios[i].value) {
+                case "A4": val = 210 / 297; break;
+                case "A3": val = 297 / 420; break;
+            }
+            return val;
         }
     }
 }
