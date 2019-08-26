@@ -14,20 +14,21 @@
             <div id="handle_frame">
                 <div id="handle_frame_first">
                     <h2 class="step_text">第一步</h2>
-                    <input id="upload_input" type="file" accept="image/*" onchange="showPreview(this)">
+                    <input id="upload_input" type="file" accept="image/*" onchange="InitImage(this)">
                 </div>
                 <div id="handle_frame_second">
                     <h2 class="step_text">第二步</h2>
                     <div>
                         <span>裁剪比例：</span>
-                        <label><input name="pageType" type="radio" value="" />A4</label>
-                        <label><input name="pageType" type="radio" value="" />A3</label>
-                        <label><input name="pageType" type="radio" value="" />自定义</label>
+                        <div><input name="pageType" type="radio" value="" checked="true" />A4(297*210)</div>
+                        <div><input name="pageType" type="radio" value="" />A3(420*297)</div>
+                        <div><input name="pageType" type="radio" value="" />自定义</div>
                     </div>
+                    <br>
                     <div>
-                        <span>图片格式：</span>
-                        <label><input name="pictureType" type="radio" value="" />jpg</label>
-                        <label><input name="pictureType" type="radio" value="" />png</label>
+                        <span>导出图片格式：</span>
+                        <div><input name="pictureType" type="radio" value="" checked="true" />png</div>
+                        <div><input name="pictureType" type="radio" value="" />jpg</div>
                     </div>
                 </div>
                 <div id="handle_frame_third">
