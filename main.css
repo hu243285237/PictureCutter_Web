@@ -1,42 +1,63 @@
+/* ----------------------------整体页面-------------------------------- */
+
 html, body {
     width: 100%;
     height: 100%;
     margin: 0;
     padding: 0;
-    background-color: whitesmoke;
 }
 
 #app {
-    width: 800px;
-    height: 600px;
+    width: 100%;
+    height: 100%;
     margin: 0 auto;
     background-color: cornsilk;
-    border: 1px solid #F0FFF0;
-    border-radius: 1px;
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.5);
-    position: relative;
-    transform: translateY(25%);
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+}
+
+/* --------------------------整体上下两部分---------------------------- */
+
+#title_frame {
+    width: 100%;
+    height: 40%;
+    background-color: aliceblue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#handle_frame {
+    width: 100%;
+    height: 60%;
+    background-color: gainsboro;
+}
+
+/* -----------------------------标题部分------------------------------- */
+
+#title {
+    font-size: 78px;
+    text-align: center;
+}
+
+#introduce {
+    text-align: center;
+}
+
+/* -----------------------------操作部分-------------------------------- */
+
+#handle_frame_first {
+
 }
 
 /* ------------------------------------------------------------ */
-
-#inputFrame {
-    margin: 20px 0px 20px 0px;
-}
 
 #upload_input {
     width: 200px;
     align-self: center;
-}
-
-/* ------------------------------------------------------------ */
-
-#cutter_canvas {
-    border: 2px solid #964e4e;
-    background: #b1b1b1;;
 }
 
 /* ------------------------------------------------------------ */
