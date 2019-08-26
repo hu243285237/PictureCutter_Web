@@ -80,12 +80,24 @@ function getCutterLength (pageType) {
 
 // 得到用户选择的裁剪比例类型
 function getInputPageType () {
-    return getRadioValue("pageType");
+    var pageType;
+    var radioVal = getRadioValue("pageType");
+    switch (radioVal) {
+        case "A4": pageType = 210 / 297; break;
+        case "A3": pageType = 297 / 420; break;
+    }
+    return pageType;
 }
 
 // 得到用户选择的导出图片格式
 function getInputPictureType () {
-    return getRadioValue("pictureType");
+    var pictureType;
+    var radioVal = getRadioValue("pictureType");
+    switch (radioVal) {
+        case "png": pictureType = "png"; break;
+        case "jpg": pictureType = "jpeg"; break;
+    }
+    return pictureType;
 }
 
 // 根据 radioName 得到单选按钮的值
@@ -93,12 +105,7 @@ function getRadioValue (radioName) {
     var radios = document.getElementsByName(radioName);
     for (let i = 0; i < radios.length; i++) {
         if (radios[i].checked) {
-            let val;
-            switch (radios[i].value) {
-                case "A4": val = 210 / 297; break;
-                case "A3": val = 297 / 420; break;
-            }
-            return val;
+            return radios[i].value;
         }
     }
 }
