@@ -9,15 +9,17 @@
         <div id="app">
             <div id="title_frame">
                 <h1 id="title">PictureCutter</h1>
-                <div id="introduce">一个可将长图片自动裁剪成多张图片的工具</div>
+                <div id="introduce">一个可将长图片自动裁剪成多张图片的工具，可适用于长图分页打印</div>
             </div>
             <div id="handle_frame">
                 <div id="handle_frame_first">
-                    <h2 class="step_text">第一步</h2>
+                    <h2 class="step_text">1、上传图片</h2>
+                    <img id="cover_upload_img" src="./image/input_button.png">
                     <input id="upload_input" type="file" accept="image/*" onchange="InitImage(this)">
+                    <p id="upload_text"></p>
                 </div>
                 <div id="handle_frame_second">
-                    <h2 class="step_text">第二步</h2>
+                    <h2 class="step_text">2、导出设置</h2>
                     <div>
                         <span>裁剪比例：</span>
                         <div><input name="pageType" type="radio" value="A4" checked="true" />A4(297*210)</div>
@@ -35,8 +37,9 @@
                     </div>
                 </div>
                 <div id="handle_frame_third">
-                    <h2 class="step_text">第三步</h2>
-                    <button id="cut_button" onclick="exportPicture()">导出</button>
+                    <h2 class="step_text">3、导出图片</h2>
+                    <img id="cover_export_img" src="./image/export_button.png">
+                    <button id="export_button" onclick="exportPicture()">导出</button>
                 </div>
             </div>
         </div>

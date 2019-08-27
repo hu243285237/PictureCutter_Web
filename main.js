@@ -1,5 +1,18 @@
 // 得到各个元素
 var app = document.getElementById("app");
+var upload_text = document.getElementById("upload_text");
+var upload_input = document.getElementById("upload_input");
+var cover_upload_img = document.getElementById("cover_upload_img");
+var export_button = document.getElementById("export_button");
+var cover_export_img = document.getElementById("cover_export_img");
+
+// 点击图片代替执行事件
+cover_upload_img.addEventListener("click", () => {
+    upload_input.click();
+});
+cover_export_img.addEventListener("click", () => {
+    export_button.click();
+});
 
 // 图片的方向
 const HORIZONTAL = Symbol();
@@ -15,6 +28,7 @@ function InitImage (source) {
         var fileReader = new FileReader();
         fileReader.onloadend = function (e) {
             upload_img.src = e.target.result;
+            upload_text.innerText = "当前选择的图片：" + file.name;
         };
         fileReader.readAsDataURL(file);
     }
