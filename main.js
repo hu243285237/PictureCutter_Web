@@ -1,10 +1,10 @@
 // 得到各个元素
-var app = document.getElementById("app");
-var upload_text = document.getElementById("upload_text");
-var upload_input = document.getElementById("upload_input");
-var cover_upload_img = document.getElementById("cover_upload_img");
-var export_button = document.getElementById("export_button");
-var cover_export_img = document.getElementById("cover_export_img");
+var app = document.querySelector("#app");
+var upload_text = document.querySelector("#upload_text");
+var upload_input = document.querySelector("#upload_input");
+var cover_upload_img = document.querySelector("#cover_upload_img");
+var export_button = document.querySelector("#export_button");
+var cover_export_img = document.querySelector("#cover_export_img");
 
 // 点击图片代替执行事件
 cover_upload_img.addEventListener("click", () => {
@@ -23,9 +23,9 @@ var upload_img = new Image();
 
 // 初始化图片
 function InitImage (source) {
-    var file = source.files[0];
+    let file = source.files[0];
     if (window.FileReader) {
-        var fileReader = new FileReader();
+        let fileReader = new FileReader();
         fileReader.onloadend = function (e) {
             upload_img.src = e.target.result;
             upload_text.innerText = "当前选择的图片：" + file.name;
@@ -36,23 +36,23 @@ function InitImage (source) {
 
 // 动态创建 canvas 并对图像裁剪和显示
 function exportPicture () {
-    var pageType = getInputPageType();
-    var pageNum = getPageAmount(pageType);
-    var cutterLength = getCutterLength(pageType);
-    var direaction = getPictureDireaction();
+    let pageType = getInputPageType();
+    let pageNum = getPageAmount(pageType);
+    let cutterLength = getCutterLength(pageType);
+    let direaction = getPictureDireaction();
     for (let i = 0; i < pageNum; i++) {
-        var new_canvas = document.createElement("canvas");
+        let new_canvas = document.createElement("canvas");
         new_canvas.id = "cutter_canvas" + i;
         if (direaction === VERTICAL) {
             new_canvas.width = upload_img.width;
             new_canvas.height = cutterLength;
-            var ctx = new_canvas.getContext("2d");
-            ctx.drawImage(upload_img, 0, cutterLength * i, upload_img.width, cutterLength, 0, 0, new_canvas.width, new_canvas.height);
+            let context = new_canvas.getContext("2d");
+            context.drawImage(upload_img, 0, cutterLength * i, upload_img.width, cutterLength, 0, 0, new_canvas.width, new_canvas.height);
         } else {
             new_canvas.width = cutterLength;
             new_canvas.height = upload_img.height;
-            var ctx = new_canvas.getContext("2d");
-            ctx.drawImage(upload_img, cutterLength * i, 0, cutterLength, upload_img.height, 0, 0, new_canvas.width, new_canvas.height);
+            let context = new_canvas.getContext("2d");
+            context.drawImage(upload_img, cutterLength * i, 0, cutterLength, upload_img.height, 0, 0, new_canvas.width, new_canvas.height);
         }
         downloadPicture(new_canvas);
     }
@@ -60,8 +60,8 @@ function exportPicture () {
 
 // 批量下载图片
 function downloadPicture (canvas) {
-    var pictureType = getInputPictureType();
-    var download_a = document.createElement("a");
+    let pictureType = getInputPictureType();
+    let download_a = document.createElement("a");
     download_a.download = "下载";
     download_a.href = canvas.toDataURL("image/" + pictureType);
     download_a.click();
@@ -74,7 +74,7 @@ function getPictureDireaction () {
 
 // 计算图片将会切割成几页
 function getPageAmount (pageType) {
-    var direaction = getPictureDireaction();
+    let direaction = getPictureDireaction();
     if (direaction === VERTICAL) {
         return pageType * (upload_img.height / upload_img.width);
     } else {
@@ -84,7 +84,7 @@ function getPageAmount (pageType) {
 
 // 计算每次裁剪的长度值
 function getCutterLength (pageType) {
-    var direaction = getPictureDireaction();
+    let direaction = getPictureDireaction();
     if (direaction === VERTICAL) {
         return (1 / pageType) * upload_img.width;
     } else {
@@ -94,8 +94,8 @@ function getCutterLength (pageType) {
 
 // 得到用户选择的裁剪比例类型
 function getInputPageType () {
-    var pageType;
-    var radioVal = getRadioValue("pageType");
+    let pageType;
+    let radioVal = getRadioValue("pageType");
     switch (radioVal) {
         case "A4": pageType = 210 / 297; break;
         case "A3": pageType = 297 / 420; break;
@@ -105,8 +105,8 @@ function getInputPageType () {
 
 // 得到用户选择的导出图片格式
 function getInputPictureType () {
-    var pictureType;
-    var radioVal = getRadioValue("pictureType");
+    let pictureType;
+    let radioVal = getRadioValue("pictureType");
     switch (radioVal) {
         case "png": pictureType = "png"; break;
         case "jpg": pictureType = "jpeg"; break;
@@ -116,7 +116,7 @@ function getInputPictureType () {
 
 // 根据 radioName 得到单选按钮的值
 function getRadioValue (radioName) {
-    var radios = document.getElementsByName(radioName);
+    let radios = document.getElementsByName(radioName);
     for (let i = 0; i < radios.length; i++) {
         if (radios[i].checked) {
             return radios[i].value;
