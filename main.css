@@ -101,10 +101,11 @@ html, body {
     width: 50%;
     height: 100px;
     margin: 0 auto;
+    margin-bottom: 50px;
 }
 
 .selection_title {
-    width: 45%;
+    width: 40%;
     height: 100%;
     margin: 0 auto;
     float: left;
@@ -114,13 +115,18 @@ html, body {
 }
 
 .selection_radios {
-    width: 45%;
+    width: 60%;
     height: 100%;
     text-align: left;
 }
 
 .selection_radio {
     text-align: left;
+    margin-bottom: 5px;
+}
+
+#customize_x_input, #customize_y_input {
+    width: 50px;
 }
 
 /* ------------------------------------------------------------------- */

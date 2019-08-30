@@ -5,6 +5,8 @@ var upload_input = document.querySelector("#upload_input");
 var cover_upload_img = document.querySelector("#cover_upload_img");
 var export_button = document.querySelector("#export_button");
 var cover_export_img = document.querySelector("#cover_export_img");
+var customize_x_input = document.querySelector("#customize_x_input");
+var customize_y_input = document.querySelector("#customize_y_input");
 
 // 点击图片代替执行事件
 cover_upload_img.addEventListener("click", () => {
@@ -99,6 +101,7 @@ function getInputPageType () {
     switch (radioVal) {
         case "A4": pageType = 210 / 297; break;
         case "A3": pageType = 297 / 420; break;
+        case "customize": pageType = customize_y_input.value / customize_x_input.value; break;
     }
     return pageType;
 }
