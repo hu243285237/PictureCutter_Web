@@ -49,12 +49,12 @@ html, body {
 
 #title {
     color: rgb(255, 255, 100);
-    font-size: 86px;
+    font-size: 68px;
 }
 
 #introduce {
     color: white;
-    font-size: 22px;
+    font-size: 20px;
 }
 
 /* ----------------------------操作部分-------------------------------- */
@@ -78,7 +78,7 @@ html, body {
 }
 
 .step_text {
-    font-size: 36px;
+    font-size: 28px;
     margin-bottom: 75px;
 }
 
@@ -92,8 +92,8 @@ html, body {
 }
 
 #cover_upload_img, #cover_export_img {
-    width: 200px;
-    height: 200px;
+    width: 160px;
+    height: 160px;
     cursor: pointer;
 }
 
@@ -110,7 +110,7 @@ html, body {
     margin: 0 auto;
     float: left;
     text-align: left;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 500;
 }
 
@@ -121,6 +121,7 @@ html, body {
 }
 
 .selection_radio {
+    font-size: 14px;
     text-align: left;
     margin-bottom: 5px;
 }
