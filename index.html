@@ -4,6 +4,8 @@
         <meta charset="utf-8" />
         <title>PictureCutter</title>
         <link rel="stylesheet" type="text/css" href="./main.css" />
+        <script src="plugin/jszip.min.js"></script>
+        <script src="plugin/FileSaver.min.js"></script>
     </head>
     <body>
         <div id="app">
@@ -14,7 +16,7 @@
             <div id="handle_frame">
                 <div id="handle_frame_first">
                     <h2 class="step_text">1、上传图片</h2>
-                    <img id="cover_upload_img" src="./image/input_button.png">
+                    <img id="cover_upload_img" src="./images/input_button.png">
                     <input id="upload_input" type="file" accept="image/*" onchange="InitImage(this)">
                     <p id="upload_text"></p>
                 </div>
@@ -41,7 +43,7 @@
                 </div>
                 <div id="handle_frame_third">
                     <h2 class="step_text">3、导出图片</h2>
-                    <img id="cover_export_img" src="./image/export_button.png">
+                    <img id="cover_export_img" src="./images/export_button.png">
                     <button id="export_button" onclick="exportPicture()">导出</button>
                 </div>
             </div>

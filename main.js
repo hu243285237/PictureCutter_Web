@@ -42,6 +42,7 @@ function exportPicture () {
     let pageNum = getPageAmount(pageType);
     let cutterLength = getCutterLength(pageType);
     let direaction = getPictureDireaction();
+    let zip = new JSZip();
     for (let i = 0; i < pageNum; i++) {
         let new_canvas = document.createElement("canvas");
         new_canvas.id = "cutter_canvas" + i;
@@ -56,17 +57,23 @@ function exportPicture () {
             let context = new_canvas.getContext("2d");
             context.drawImage(upload_img, cutterLength * i, 0, cutterLength, upload_img.height, 0, 0, new_canvas.width, new_canvas.height);
         }
-        downloadPicture(new_canvas);
+        pictureToZip(zip, new_canvas, i);
     }
+    downloadZip(zip);
 }
 
-// 批量下载图片
-function downloadPicture (canvas) {
+// 下载已压缩好的 zip
+function downloadZip (zip) {
+    zip.generateAsync({ type: "blob" }).then(function (content) {
+        saveAs(content, "pictures.zip")
+    });
+}
+
+// 将裁剪好的图片压缩成一个 zip
+function pictureToZip (zip, canvas, index) {
     let pictureType = getInputPictureType();
-    let download_a = document.createElement("a");
-    download_a.download = "下载";
-    download_a.href = canvas.toDataURL("image/" + pictureType);
-    download_a.click();
+    let pictureURL = canvas.toDataURL();
+    zip.file(index + "." + pictureType, pictureURL.split(',')[1], { base64: true });
 }
 
 // 判断图片是横向还是纵向
