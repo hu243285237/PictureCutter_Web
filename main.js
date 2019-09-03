@@ -36,7 +36,7 @@ function InitImage (source) {
     }
 }
 
-// 动态创建 canvas 并对图像裁剪和显示
+// 动态创建 canvas 对图像裁剪和显示，并将裁剪好的图片添加进压缩包
 function exportPicture () {
     let pageType = getInputPageType();
     let pageNum = getPageAmount(pageType);
@@ -69,7 +69,7 @@ function downloadZip (zip) {
     });
 }
 
-// 将裁剪好的图片压缩成一个 zip
+// 将裁剪好的图片添加到 zip
 function pictureToZip (zip, canvas, index) {
     let pictureType = getInputPictureType();
     let pictureURL = canvas.toDataURL();

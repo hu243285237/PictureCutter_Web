@@ -1,5 +1,7 @@
-# PictureCutter
+# 说明
 
-可支持 Chrome、Firefox、Edge 浏览器等
+一个可将长图片自动裁剪成多张图片的工具，可适用于长图片分页打印
 
-暂不支持 IE 浏览器
+## 兼容性
+
+请使用 Chrome、Firefox、Edge 浏览器，暂时不支持 IE 浏览器
