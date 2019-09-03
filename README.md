@@ -1,3 +1,7 @@
+## 在线地址
+
+hu243285237.github.io/PictureCutter_Web/
+
 ## 说明
 
 一个可将长图片自动裁剪成多张图片的工具
