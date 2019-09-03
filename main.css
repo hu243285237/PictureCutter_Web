@@ -97,6 +97,10 @@ html, body {
     cursor: pointer;
 }
 
+#cover_upload_img:hover, #cover_export_img:hover {
+    transform: scale(1.1);
+}
+
 .selection_frame {
     width: 50%;
     height: 100px;

@@ -38,11 +38,16 @@ function InitImage (source) {
 
 // 动态创建 canvas 对图像裁剪和显示，并将裁剪好的图片添加进压缩包
 function exportPicture () {
+    if (upload_img.src === "") {
+        alert("————————请选择要裁剪的图片————————");
+        return;
+    }
     let pageType = getInputPageType();
     let pageNum = getPageAmount(pageType);
     let cutterLength = getCutterLength(pageType);
     let direaction = getPictureDireaction();
     let zip = new JSZip();
+    let folder = zip.folder("images");
     for (let i = 0; i < pageNum; i++) {
         let new_canvas = document.createElement("canvas");
         new_canvas.id = "cutter_canvas" + i;
@@ -57,7 +62,7 @@ function exportPicture () {
             let context = new_canvas.getContext("2d");
             context.drawImage(upload_img, cutterLength * i, 0, cutterLength, upload_img.height, 0, 0, new_canvas.width, new_canvas.height);
         }
-        pictureToZip(zip, new_canvas, i);
+        pictureToZip(folder, new_canvas, i);
     }
     downloadZip(zip);
 }
@@ -65,15 +70,15 @@ function exportPicture () {
 // 下载已压缩好的 zip
 function downloadZip (zip) {
     zip.generateAsync({ type: "blob" }).then(function (content) {
-        saveAs(content, "pictures.zip")
+        saveAs(content, "images.zip")
     });
 }
 
-// 将裁剪好的图片添加到 zip
-function pictureToZip (zip, canvas, index) {
+// 将裁剪好的图片添加到压缩包文件夹
+function pictureToZip (folder, canvas, index) {
     let pictureType = getInputPictureType();
     let pictureURL = canvas.toDataURL();
-    zip.file(index + "." + pictureType, pictureURL.split(',')[1], { base64: true });
+    folder.file(index + "." + pictureType, pictureURL.split(',')[1], { base64: true });
 }
 
 // 判断图片是横向还是纵向
