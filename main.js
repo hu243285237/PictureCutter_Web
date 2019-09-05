@@ -36,18 +36,70 @@ function InitImage (source) {
     }
 }
 
-// 动态创建 canvas 对图像裁剪和显示，并将裁剪好的图片添加进压缩包
-function exportPicture () {
+// 导出
+function toExport () {
     if (upload_img.src === "") {
         alert("————————请选择要裁剪的图片————————");
         return;
     }
+    let pictureType = getInputPictureType();
+    if (pictureType === "pdf") {
+        exportToPDF();
+    } else {
+        exportToPictures();
+    }
+}
+
+// 导出为图片格式，放在一个压缩包
+function exportToPictures () {
+    let zip = new JSZip();
+    let folder = zip.folder("images");
+    let pictureType = getInputPictureType();
+    let picturesURL = getPicturesURL();
+    for (let i = 0; i < picturesURL.length; i++) {
+        folder.file(i + "." + pictureType, picturesURL[i].split(',')[1], { base64: true });
+    }
+    zip.generateAsync({ type: "blob" }).then(function (content) {
+        saveAs(content, "images.zip")
+    });
+}
+
+// 导出为 PDF 格式
+function exportToPDF () {
+    let direaction = getPictureDireaction();
+    let pageType = getInputPageType();
+    let cutterLength = getCutterLength(pageType);
+    let picturesURL = getPicturesURL();
+    let pdf = {};
+    if (direaction === VERTICAL) {
+        pdf = new jsPDF("portrait", "pt", [upload_img.width, cutterLength]);
+        for (let i = 0; i < picturesURL.length; i++) {
+            pdf.addImage(picturesURL[i], "JPEG", 0, 0, upload_img.width, cutterLength);
+            if (i !== picturesURL.length - 1) {
+                pdf.addPage([upload_img.width, cutterLength], "portrait");
+            }
+        }
+    } else {
+        pdf = new jsPDF("landscape", "pt", [cutterLength, upload_img.height]);
+        for (let i = 0; i < picturesURL.length; i++) {
+            pdf.addImage(picturesURL[i], "JPEG", 0, 0, cutterLength, upload_img.height);
+            if (i !== picturesURL.length - 1) {
+                pdf.addPage([cutterLength, upload_img.height], "landscape");
+            }
+        }
+    }
+    pdf.save("images.pdf");
+}
+
+// 动态创建 canvas 对图像裁剪，返回裁剪后的图片 URL 组
+function getPicturesURL () {
     let pageType = getInputPageType();
     let pageNum = getPageAmount(pageType);
     let cutterLength = getCutterLength(pageType);
     let direaction = getPictureDireaction();
-    let zip = new JSZip();
-    let folder = zip.folder("images");
+    let pictureType = getInputPictureType();
+    pictureType = pictureType === "pdf" ? "png" : pictureType;
+    let picturesURL = [];
     for (let i = 0; i < pageNum; i++) {
         let new_canvas = document.createElement("canvas");
         new_canvas.id = "cutter_canvas" + i;
@@ -62,23 +114,9 @@ function exportPicture () {
             let context = new_canvas.getContext("2d");
             context.drawImage(upload_img, cutterLength * i, 0, cutterLength, upload_img.height, 0, 0, new_canvas.width, new_canvas.height);
         }
-        pictureToZip(folder, new_canvas, i);
+        picturesURL.push(new_canvas.toDataURL("image/" + pictureType, 1.0));
     }
-    downloadZip(zip);
-}
-
-// 下载已压缩好的 zip
-function downloadZip (zip) {
-    zip.generateAsync({ type: "blob" }).then(function (content) {
-        saveAs(content, "images.zip")
-    });
-}
-
-// 将裁剪好的图片添加到压缩包文件夹
-function pictureToZip (folder, canvas, index) {
-    let pictureType = getInputPictureType();
-    let pictureURL = canvas.toDataURL("image/" + pictureType);
-    folder.file(index + "." + pictureType, pictureURL.split(',')[1], { base64: true });
+    return picturesURL;
 }
 
 // 判断图片是横向还是纵向
@@ -125,6 +163,7 @@ function getInputPictureType () {
     switch (radioVal) {
         case "png": pictureType = "png"; break;
         case "jpg": pictureType = "jpeg"; break;
+        case "pdf": pictureType = "pdf"; break;
     }
     return pictureType;
 }

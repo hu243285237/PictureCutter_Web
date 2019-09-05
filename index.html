@@ -35,17 +35,18 @@
                         </span>
                     </div>
                     <div class="selection_frame">
-                        <h3 class="selection_title">导出图片格式：</h3>
+                        <h3 class="selection_title">选择导出格式：</h3>
                         <span class="selection_radios">
                             <div class="selection_radio"><input name="pictureType" type="radio" value="png" checked="true" />png</div>
                             <div class="selection_radio"><input name="pictureType" type="radio" value="jpg" />jpg</div>
+                            <div class="selection_radio"><input name="pictureType" type="radio" value="pdf" />pdf</div>
                         </span>
                     </div>
                 </div>
                 <div id="handle_frame_third">
                     <h2 class="step_text">3、导出图片</h2>
                     <img id="cover_export_img" src="./images/export_button.png">
-                    <button id="export_button" onclick="exportPicture()">导出</button>
+                    <button id="export_button" onclick="toExport()">导出</button>
                 </div>
             </div>
         </div>
