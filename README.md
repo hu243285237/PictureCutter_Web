@@ -12,10 +12,12 @@
 
 ## 兼容性
 
-请使用 Chrome、Firefox、Edge 浏览器，暂时不支持 IE 浏览器
+请使用 Chrome、Firefox、Edge 浏览器，不支持 IE 浏览器
 
 ## 使用的插件
 
 FileSaver : 用于下载文件到本地
 
-JsZip : 用于将裁剪好的图片添加进压缩包
+jszip : 用于将裁剪好的图片添加进压缩包
+
+jspdf : 用于输出PDF格式
