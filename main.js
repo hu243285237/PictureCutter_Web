@@ -71,20 +71,23 @@ function exportToPDF () {
     let cutterLength = getCutterLength(pageType);
     let picturesURL = getPicturesURL();
     let pdf = {};
+    let pdfOrientation = "";
     if (direaction === VERTICAL) {
-        pdf = new jsPDF("portrait", "pt", [upload_img.width, cutterLength]);
+        pdfOrientation = upload_img.width < cutterLength ? "portrait" : "landscape";
+        pdf = new jsPDF(pdfOrientation, "pt", [upload_img.width, cutterLength]);
         for (let i = 0; i < picturesURL.length; i++) {
             pdf.addImage(picturesURL[i], "JPEG", 0, 0, upload_img.width, cutterLength);
             if (i !== picturesURL.length - 1) {
-                pdf.addPage([upload_img.width, cutterLength], "portrait");
+                pdf.addPage([upload_img.width, cutterLength], pdfOrientation);
             }
         }
     } else {
-        pdf = new jsPDF("landscape", "pt", [cutterLength, upload_img.height]);
+        pdfOrientation = upload_img.height > cutterLength ? "portrait" : "landscape";
+        pdf = new jsPDF(pdfOrientation, "pt", [cutterLength, upload_img.height]);
         for (let i = 0; i < picturesURL.length; i++) {
             pdf.addImage(picturesURL[i], "JPEG", 0, 0, cutterLength, upload_img.height);
             if (i !== picturesURL.length - 1) {
-                pdf.addPage([cutterLength, upload_img.height], "landscape");
+                pdf.addPage([cutterLength, upload_img.height], pdfOrientation);
             }
         }
     }
