@@ -77,7 +77,7 @@ function downloadZip (zip) {
 // 将裁剪好的图片添加到压缩包文件夹
 function pictureToZip (folder, canvas, index) {
     let pictureType = getInputPictureType();
-    let pictureURL = canvas.toDataURL();
+    let pictureURL = canvas.toDataURL("image/" + pictureType);
     folder.file(index + "." + pictureType, pictureURL.split(',')[1], { base64: true });
 }
 
