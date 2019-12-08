@@ -20,7 +20,7 @@ html, body {
     align-items: center;
     justify-content: center;
     min-width: 800px;
-    min-height: 650px;
+    min-height: 700px;
 }
 
 /* -------------------------整体上下两部分---------------------------- */
@@ -81,8 +81,8 @@ html, body {
 
 .step_text {
     font-size: 28px;
-    margin-top: 28px;
-    margin-bottom: 28px;
+    margin-top: 24px;
+    margin-bottom: 32px;
 }
 
 #upload_text {
@@ -98,7 +98,6 @@ html, body {
     width: 160px;
     height: 160px;
     cursor: pointer;
-    margin-top: 25px;
 }
 
 #cover_upload_img:hover, #cover_export_img:hover {
