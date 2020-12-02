@@ -1,6 +1,6 @@
 ## 在线地址
 
-[hu243285237.github.io/PictureCutter_Web](https://hu243285237.github.io/PictureCutter_Web/)
+http://www.hu24.com.cn/picturecutter/index.html
 
 ## 说明
 
