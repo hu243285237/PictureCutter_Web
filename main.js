@@ -24,7 +24,7 @@ const VERTICAL = Symbol();
 var upload_img = new Image();
 
 // 初始化图片
-function InitImage (source) {
+function InitImage(source) {
     let file = source.files[0];
     if (window.FileReader) {
         let fileReader = new FileReader();
@@ -37,7 +37,7 @@ function InitImage (source) {
 }
 
 // 导出
-function toExport () {
+function toExport() {
     if (upload_img.src === "") {
         alert("————————请选择要裁剪的图片————————");
         return;
@@ -51,7 +51,7 @@ function toExport () {
 }
 
 // 导出为图片格式，放在一个压缩包
-function exportToPictures () {
+function exportToPictures() {
     let zip = new JSZip();
     let folder = zip.folder("images");
     let pictureType = getInputPictureType();
@@ -65,7 +65,7 @@ function exportToPictures () {
 }
 
 // 导出为 PDF 格式
-function exportToPDF () {
+function exportToPDF() {
     let direaction = getPictureDireaction();
     let pageType = getInputPageType();
     let cutterLength = getCutterLength(pageType);
@@ -95,7 +95,7 @@ function exportToPDF () {
 }
 
 // 动态创建 canvas 对图像裁剪，返回裁剪后的图片 URL 组
-function getPicturesURL () {
+function getPicturesURL() {
     let pageType = getInputPageType();
     let pageNum = getPageAmount(pageType);
     let cutterLength = getCutterLength(pageType);
@@ -123,12 +123,12 @@ function getPicturesURL () {
 }
 
 // 判断图片是横向还是纵向
-function getPictureDireaction () {
+function getPictureDireaction() {
     return upload_img.height >= upload_img.width ? VERTICAL : HORIZONTAL;
 }
 
 // 计算图片将会切割成几页
-function getPageAmount (pageType) {
+function getPageAmount(pageType) {
     let direaction = getPictureDireaction();
     if (direaction === VERTICAL) {
         return pageType * (upload_img.height / upload_img.width);
@@ -138,7 +138,7 @@ function getPageAmount (pageType) {
 }
 
 // 计算每次裁剪的长度值
-function getCutterLength (pageType) {
+function getCutterLength(pageType) {
     let direaction = getPictureDireaction();
     if (direaction === VERTICAL) {
         return (1 / pageType) * upload_img.width;
@@ -148,7 +148,7 @@ function getCutterLength (pageType) {
 }
 
 // 得到用户选择的裁剪比例类型
-function getInputPageType () {
+function getInputPageType() {
     let pageType;
     let radioVal = getRadioValue("pageType");
     switch (radioVal) {
@@ -160,7 +160,7 @@ function getInputPageType () {
 }
 
 // 得到用户选择的导出图片格式
-function getInputPictureType () {
+function getInputPictureType() {
     let pictureType;
     let radioVal = getRadioValue("pictureType");
     switch (radioVal) {
@@ -172,7 +172,7 @@ function getInputPictureType () {
 }
 
 // 根据 radioName 得到单选按钮的值
-function getRadioValue (radioName) {
+function getRadioValue(radioName) {
     let radios = document.getElementsByName(radioName);
     for (let i = 0; i < radios.length; i++) {
         if (radios[i].checked) {
