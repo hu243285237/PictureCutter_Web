@@ -59,8 +59,8 @@ export default function (props: Props) {
       </div>
       {img ? (
         <>
-          <p className='area-info'>当前选择的图片：{fileName}</p>
-          <p className='area-info'>
+          <p className="area-info">当前选择的图片：{fileName}</p>
+          <p className="area-info">
             当前图片宽度和高度：{img.width} * {img.height}
           </p>
         </>
