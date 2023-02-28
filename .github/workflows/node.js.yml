@@ -18,3 +18,10 @@ jobs:
     - uses: actions/checkout@v3
     - run: npm install
     - run: CI="" npm run build
+    
+    - name: deploy
+      uses: JamesIves/github-pages-deploy-action@releases/v3
+      with:
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        BRANCH: gh-pages
+        FOLDER: build
