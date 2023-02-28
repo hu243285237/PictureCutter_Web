@@ -27,7 +27,16 @@ export default function () {
         >
           文档说明
         </label>
-        <label className="nav-item">版本v{config.version}</label>
+        <label
+          className="nav-item"
+          onClick={() => {
+            window.open(
+              'https://github.com/hu243285237/PictureCutter_Web/tags'
+            );
+          }}
+        >
+          版本v{config.version}
+        </label>
       </div>
       <img className="logo" src={logo} alt="logo" draggable="false" />
     </header>
