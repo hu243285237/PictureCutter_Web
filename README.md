@@ -1,7 +1,3 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ## 在线地址
 
 https://hu243285237.github.io/PictureCutter_Web/
@@ -25,6 +21,10 @@ file-saver: 用于下载文件到本地
 jszip: 用于将裁剪好的图片添加进压缩包
 
 jspdf: 用于输出 PDF 格式
+
+## Getting Started with Create React App
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
