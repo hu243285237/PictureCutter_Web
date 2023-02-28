@@ -1,0 +1,31 @@
+.export-container {
+  margin: 20px 0 40px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: aliceblue;
+
+  .list {
+    display: flex;
+
+    &-item {
+      width: 120px;
+      padding: 8px 18px;
+      margin: 24px 18px;
+      border: 2px solid white;
+      border-radius: 18px;
+      transition: linear;
+      transition-duration: 0.1s;
+      cursor: pointer;
+
+      &:hover {
+        scale: 1.05;
+        color: black;
+        background-color: wheat;
+        box-shadow: 1px 1px 6px 1px rgba(255, 255, 255, 0.5);
+        font-weight: bold;
+      }
+    }
+  }
+}

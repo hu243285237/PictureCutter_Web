@@ -1,0 +1,53 @@
+.header-container {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+
+  .title {
+    margin: 24px 0;
+    font-size: 56px;
+  }
+
+  .description {
+    font-size: 20px;
+  }
+
+  .nav {
+
+    &-item {
+      margin: 0 8px;
+      color: aliceblue;
+      font-size: 16px;
+      border-bottom: 1px solid white;
+      cursor: pointer;
+
+      &:hover {
+        color: wheat;
+      }
+    }
+  }
+
+  .logo {
+    margin-top: 36px;
+    height: 120px;
+    pointer-events: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .logo {
+      animation: logo-spin infinite 20s linear;
+    }
+  }
+
+  @keyframes logo-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
