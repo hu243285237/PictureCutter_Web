@@ -14,7 +14,7 @@ function App() {
   const [imgFormat, setImgFormat] = useState<string>('');
   const [option, setOption] = useState<OptionProps>({
     cutMode: CutMode.AMOUNT,
-    pixel: { width: 64, height: 64 },
+    pixel: { width: 128, height: 128 },
     amount: { row: 1, col: 1 },
     scale: { width: 1, height: 1 },
   });
