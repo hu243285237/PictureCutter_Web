@@ -6,8 +6,8 @@ on:
   # workflow_dispatch:
   # 计划事件
   schedule:
-    # 每天北京时间9点运行
-    - cron: '*/2 * * * *'
+    # 每一小时运行一次
+    - cron: '*/60 * * * *'
 jobs:
   build:
     runs-on: ubuntu-latest
