@@ -117,31 +117,43 @@ export function scaleCut(
   for (let i = 0; i < amount; i++) {
     const canvas = document.createElement('canvas');
     if (dir === Direaction.VERTICAL) {
-      [canvas.width, canvas.height] = [img.width, cutLength];
-      let context = canvas.getContext('2d');
+      let drawLength;
+      if (i === amount - 1) {
+        drawLength = img.height % cutLength;
+      } else {
+        drawLength = cutLength;
+      }
+      [canvas.width, canvas.height] = [img.width, drawLength];
+      const context = canvas.getContext('2d');
       context?.drawImage(
         img,
         0,
         cutLength * i,
         img.width,
-        cutLength,
+        drawLength,
         0,
         0,
         img.width,
-        cutLength
+        drawLength
       );
     } else {
-      [canvas.width, canvas.height] = [cutLength, img.height];
-      let context = canvas.getContext('2d');
+      let drawLength;
+      if (i === amount - 1) {
+        drawLength = img.width % cutLength;
+      } else {
+        drawLength = cutLength;
+      }
+      [canvas.width, canvas.height] = [drawLength, img.height];
+      const context = canvas.getContext('2d');
       context?.drawImage(
         img,
         cutLength * i,
         0,
-        cutLength,
+        drawLength,
         img.height,
         0,
         0,
-        cutLength,
+        drawLength,
         img.height
       );
     }
@@ -178,9 +190,11 @@ export function exportImgs(imgsURL: Array<string>, format: string): void {
     img.src = imgsURL[0];
     const pdf = new jsPDF('portrait', 'pt', [img.width, img.height]);
     for (let i = 0; i < imgsURL.length; i++) {
-      pdf.addImage(imgsURL[i], 'JPEG', 0, 0, img.width, img.height);
+      const tempImg = new Image();
+      tempImg.src = imgsURL[i];
+      pdf.addImage(imgsURL[i], 'JPEG', 0, 0, tempImg.width, tempImg.height);
       if (i !== imgsURL.length - 1) {
-        pdf.addPage([img.width, img.height], 'portrait');
+        pdf.addPage([tempImg.width, tempImg.height], 'portrait');
       }
     }
     pdf.save('images.pdf');
