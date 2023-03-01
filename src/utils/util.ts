@@ -190,9 +190,11 @@ export function exportImgs(imgsURL: Array<string>, format: string): void {
     img.src = imgsURL[0];
     const pdf = new jsPDF('portrait', 'pt', [img.width, img.height]);
     for (let i = 0; i < imgsURL.length; i++) {
-      pdf.addImage(imgsURL[i], 'JPEG', 0, 0, img.width, img.height);
+      const tempImg = new Image();
+      tempImg.src = imgsURL[i];
+      pdf.addImage(imgsURL[i], 'JPEG', 0, 0, tempImg.width, tempImg.height);
       if (i !== imgsURL.length - 1) {
-        pdf.addPage([img.width, img.height], 'portrait');
+        pdf.addPage([tempImg.width, tempImg.height], 'portrait');
       }
     }
     pdf.save('images.pdf');
