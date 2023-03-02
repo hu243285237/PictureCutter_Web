@@ -8,8 +8,11 @@ on:
   schedule:
     # 每一小时运行一次
     - cron: '*/60 * * * *'
+    
 jobs:
+
   build:
+  
     runs-on: ubuntu-latest
     steps:
     - name: Mirror the Github organization repos to Gitee.
@@ -29,4 +32,21 @@ jobs:
         static_list: "PictureCutter_Web"
         # black_list: "repo_name,repo_name2"
         # white_list: "PictureCutter_Web"
+        
+    - name: Gitee Pages Action
+      # You may pin to the exact commit or the version.
+      uses: yanglbme/gitee-pages-action@v1.4.1
+      with:
+        # The Gitee username, like yanglbme
+        gitee-username: hu243285237
+        # The Gitee password
+        gitee-password: ${{ secrets.GITEE_PASSWORD }}
+        # The Gitee repository, like doocs/leetcode
+        gitee-repo: hu243285237/PictureCutter_Web
+        # Which branch to build
+        branch: gh-pages
+        # Which directory to build
+        # directory: # optional, default is 
+        # Use force https or not
+        # https: # optional, default is true
         
