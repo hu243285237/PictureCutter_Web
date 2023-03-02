@@ -1,6 +1,8 @@
 ## 在线地址
 
-https://hu243285237.github.io/PictureCutter_Web/
+Github站点: https://hu243285237.github.io/PictureCutter_Web/
+
+国内站点: http://hu243285237.gitee.io/picturecutter_web/
 
 ## 介绍
 
