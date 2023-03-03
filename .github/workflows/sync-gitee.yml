@@ -1,4 +1,5 @@
 name: Gitee repos mirror periodic job
+
 on:
   # 如果需要 PR 触发把 push 前的#去掉
   # push:
@@ -6,15 +7,17 @@ on:
   # workflow_dispatch:
   # 计划事件
   schedule:
-    # 每一小时运行一次
-    - cron: '*/60 * * * *'
+    # 北京时间早上八点每天执行一次
+    - cron: '0 0 * * *'
     
 jobs:
 
   build:
   
     runs-on: ubuntu-latest
+    
     steps:
+    
     - name: Mirror the Github organization repos to Gitee.
       uses: Yikun/gitee-mirror-action@v0.10
       with:
