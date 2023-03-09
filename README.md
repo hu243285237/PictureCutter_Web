@@ -1,6 +1,6 @@
 ## 在线地址
 
-Github站点: https://hu243285237.github.io/PictureCutter_Web/
+Github 站点: https://hu243285237.github.io/PictureCutter_Web/
 
 国内站点: http://hu243285237.gitee.io/picturecutter_web/
 
@@ -12,11 +12,9 @@ Github站点: https://hu243285237.github.io/PictureCutter_Web/
 
 主要使用了 Canvas Context 的 drawImage 方法，对图片进行分段绘制。
 
-图片选取、分段绘制和导出都在本地浏览器执行，无额外请求资源消耗。
-
 ## 导出
 
-可根据上传图片的源格式导出为 Zip 图片组或 PDF。
+可导出为图片组或 PDF 两种格式。
 
 ## 兼容性
 
@@ -52,7 +50,7 @@ jspdf: 用于输出 PDF 格式
 
 触发条件: 根据定时任务周期性触发
 
-执行方法: 同步镜像工程到 Gitee 仓库
+执行方法: 同步镜像工程到 Gitee 仓库，然后部署 Gitee Pages
 
 ## Getting Started with Create React App
 
