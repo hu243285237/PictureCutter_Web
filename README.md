@@ -10,7 +10,11 @@ Github 站点: https://hu243285237.github.io/PictureCutter_Web/
 
 ## 原理
 
-主要使用了 Canvas Context 的 drawImage 方法，对图片进行分段绘制。
+主要使用了 Canvas 上下文的 drawImage 方法，对图片进行分段绘制。
+
+## 优化
+
+使用 WebWorker 离屏渲染，防止主线程阻塞。
 
 ## 导出
 
