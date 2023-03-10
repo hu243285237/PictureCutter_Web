@@ -30,21 +30,43 @@ function App() {
   useEffect(() => {
     if (!imgURL) return;
     const { cutMode, pixel, amount, scale } = option;
-    let cuttedImgs = new Array<string>();
     switch (cutMode) {
       case CutMode.PIXEL:
-        cuttedImgs = pixelCut(imgURL, pixel.width, pixel.height, imgFormat);
+        pixelCut(
+          imgURL,
+          pixel.width,
+          pixel.height,
+          imgFormat,
+          (imgsURL: string[]) => {
+            setCuttedImgsURL(imgsURL);
+          }
+        );
         break;
       case CutMode.AMOUNT:
-        cuttedImgs = amountCut(imgURL, amount.row, amount.col, imgFormat);
+        amountCut(
+          imgURL,
+          amount.row,
+          amount.col,
+          imgFormat,
+          (imgsURL: string[]) => {
+            setCuttedImgsURL(imgsURL);
+          }
+        );
         break;
       case CutMode.SCALE:
-        cuttedImgs = scaleCut(imgURL, scale.width, scale.height, imgFormat);
+        scaleCut(
+          imgURL,
+          scale.width,
+          scale.height,
+          imgFormat,
+          (imgsURL: string[]) => {
+            setCuttedImgsURL(imgsURL);
+          }
+        );
         break;
       default:
         alert('选择裁剪方式错误');
     }
-    setCuttedImgsURL(cuttedImgs);
   }, [imgURL, option]);
 
   // 处理当选项配置更改时

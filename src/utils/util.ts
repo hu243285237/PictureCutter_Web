@@ -1,4 +1,5 @@
-import { Direaction } from './enum';
+import { CutMode } from './enum';
+import cutWorker from './worker';
 import { saveAs } from 'file-saver';
 import JSZip from 'jszip';
 import jsPDF from 'jspdf';
@@ -9,39 +10,32 @@ import jsPDF from 'jspdf';
  * @param pixelWidth 像素宽度
  * @param pixelHeight 像素高度
  * @param format 裁剪后的图片格式
+ * @param callback 回调函数
  * @returns 裁剪后的图片数组
  */
 export function pixelCut(
   imgURL: string,
   pixelWidth: number,
   pixelHeight: number,
-  format: string
-): Array<string> {
+  format: string,
+  callback: Function
+) {
   const res = new Array<string>();
   const img = new Image();
   img.src = imgURL;
   const amountRow = Math.ceil(img.width / pixelWidth);
   const amountCol = Math.ceil(img.height / pixelHeight);
-  for (let i = 0; i < amountCol; i++) {
-    for (let j = 0; j < amountRow; j++) {
-      const canvas = document.createElement('canvas');
-      [canvas.width, canvas.height] = [pixelWidth, pixelHeight];
-      const context = canvas.getContext('2d');
-      context?.drawImage(
-        img,
-        pixelWidth * j,
-        pixelHeight * i,
-        pixelWidth,
-        pixelHeight,
-        0,
-        0,
-        pixelWidth,
-        pixelHeight
-      );
-      res.push(canvas.toDataURL('image/' + format, 1.0));
-    }
-  }
-  return res;
+  cutWorker.reset(CutMode.PIXEL);
+  createImageBitmap(img).then((imgSource) => {
+    cutWorker.worker.postMessage({
+      imgSource,
+      pixelWidth,
+      pixelHeight,
+      amountRow,
+      amountCol,
+    });
+  });
+  setWorkerCallback(res, format, callback);
 }
 
 /**
@@ -50,39 +44,32 @@ export function pixelCut(
  * @param amountRow 横向切割成几份
  * @param amountCol 纵向切割成几份
  * @param format 裁剪后的图片格式
+ * @param callback 回调函数
  * @returns 裁剪后的图片数组
  */
 export function amountCut(
   imgURL: string,
   amountRow: number,
   amountCol: number,
-  format: string
-): Array<string> {
+  format: string,
+  callback: Function
+) {
   const res = new Array<string>();
   const img = new Image();
   img.src = imgURL;
   const pixelWidth = img.width / amountRow;
   const pixelHeight = img.height / amountCol;
-  for (let i = 0; i < amountCol; i++) {
-    for (let j = 0; j < amountRow; j++) {
-      const canvas = document.createElement('canvas');
-      [canvas.width, canvas.height] = [pixelWidth, pixelHeight];
-      const context = canvas.getContext('2d');
-      context?.drawImage(
-        img,
-        pixelWidth * j,
-        pixelHeight * i,
-        pixelWidth,
-        pixelHeight,
-        0,
-        0,
-        pixelWidth,
-        pixelHeight
-      );
-      res.push(canvas.toDataURL('image/' + format, 1.0));
-    }
-  }
-  return res;
+  cutWorker.reset(CutMode.AMOUNT);
+  createImageBitmap(img).then((imgSource) => {
+    cutWorker.worker.postMessage({
+      imgSource,
+      pixelWidth,
+      pixelHeight,
+      amountRow,
+      amountCol,
+    });
+  });
+  setWorkerCallback(res, format, callback);
 }
 
 /**
@@ -91,75 +78,28 @@ export function amountCut(
  * @param scaleWidth 宽度比例
  * @param scaleHeight 高度比例
  * @param format 裁剪后的图片格式
+ * @param callback 回调函数
  * @returns 裁剪后的图片数组
  */
 export function scaleCut(
   imgURL: string,
   scaleWidth: number,
   scaleHeight: number,
-  format: string
-): Array<string> {
+  format: string,
+  callback: Function
+) {
   const res = new Array<string>();
   const img = new Image();
   img.src = imgURL;
-  let amount = 0;
-  let cutLength = 0;
-  const dir =
-    img.height > img.width ? Direaction.VERTICAL : Direaction.HORIZONTAL;
-  const scale = scaleWidth / scaleHeight;
-  if (dir === Direaction.VERTICAL) {
-    amount = Math.ceil(scale * (img.height / img.width));
-    cutLength = (1 / scale) * img.width;
-  } else {
-    amount = Math.ceil((1 / scale) * (img.width / img.height));
-    cutLength = scale * img.height;
-  }
-  for (let i = 0; i < amount; i++) {
-    const canvas = document.createElement('canvas');
-    if (dir === Direaction.VERTICAL) {
-      let drawLength;
-      if (i === amount - 1) {
-        drawLength = img.height % cutLength;
-      } else {
-        drawLength = cutLength;
-      }
-      [canvas.width, canvas.height] = [img.width, drawLength];
-      const context = canvas.getContext('2d');
-      context?.drawImage(
-        img,
-        0,
-        cutLength * i,
-        img.width,
-        drawLength,
-        0,
-        0,
-        img.width,
-        drawLength
-      );
-    } else {
-      let drawLength;
-      if (i === amount - 1) {
-        drawLength = img.width % cutLength;
-      } else {
-        drawLength = cutLength;
-      }
-      [canvas.width, canvas.height] = [drawLength, img.height];
-      const context = canvas.getContext('2d');
-      context?.drawImage(
-        img,
-        cutLength * i,
-        0,
-        drawLength,
-        img.height,
-        0,
-        0,
-        drawLength,
-        img.height
-      );
-    }
-    res.push(canvas.toDataURL('image/' + format, 1.0));
-  }
-  return res;
+  cutWorker.reset(CutMode.SCALE);
+  createImageBitmap(img).then((imgSource) => {
+    cutWorker.worker.postMessage({
+      imgSource,
+      scaleWidth,
+      scaleHeight,
+    });
+  });
+  setWorkerCallback(res, format, callback);
 }
 
 /**
@@ -199,4 +139,22 @@ export function exportImgs(imgsURL: Array<string>, format: string): void {
     }
     pdf.save('images.pdf');
   }
+}
+
+// 设置裁剪 worker 的消息监听回调
+function setWorkerCallback(
+  resArr: string[],
+  format: string,
+  callback: Function
+) {
+  cutWorker.worker.onmessage = (e: MessageEvent) => {
+    if (!e.data) return;
+    const imageBitmap = e.data as ImageBitmap;
+    const canvas = document.createElement('canvas');
+    [canvas.width, canvas.height] = [imageBitmap.width, imageBitmap.height];
+    const context = canvas.getContext('bitmaprenderer');
+    context?.transferFromImageBitmap(imageBitmap);
+    resArr.push(canvas.toDataURL('image/' + format, 1.0));
+    callback && callback(resArr);
+  };
 }
