@@ -40,16 +40,8 @@ export default function () {
           版本v{config.version}
         </label>
       </div>
-      <div className={['logo', isResLoaded && 'logo-show'].join(' ')}>
-        <img
-          className="logo-img"
-          src={logo}
-          alt="logo"
-          draggable="false"
-          onLoad={() => {
-            setIsResLoaded(true);
-          }}
-        />
+      <div className="logo">
+        <img className="logo-img" src={logo} alt="logo" draggable="false" />
       </div>
     </header>
   );
