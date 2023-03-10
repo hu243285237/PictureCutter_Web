@@ -16,6 +16,8 @@ Github 站点: https://hu243285237.github.io/PictureCutter_Web/
 
 使用 WebWorker 离屏渲染，防止主线程阻塞。
 
+更改配置选项时进行防抖，防止高频率无用渲染。
+
 ## 导出
 
 可导出为图片组或 PDF 两种格式。
