@@ -17,14 +17,16 @@ function AppContent() {
       <Header />
       {/* 导入 */}
       <ImageImport />
-      {cutImgsURL.length && <>
-        {/* 选项 */}
-        <Option />
-        {/* 预览 */}
-        <Preview />
-        {/* 导出 */}
-        <Export />
-      </>}
+      {cutImgsURL.length > 0 && (
+        <>
+          {/* 选项 */}
+          <Option />
+          {/* 预览 */}
+          <Preview />
+          {/* 导出 */}
+          <Export />
+        </>
+      )}
     </>
   );
 }

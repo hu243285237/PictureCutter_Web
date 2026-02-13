@@ -48,7 +48,7 @@ export default function Preview() {
 
   return (
     <Step step={3} title="预览">
-      {cutImgsURL.length && (
+      {cutImgsURL.length > 0 && (
         <div className="flex flex-row gap-10">
           {/* 静态预览 */}
           <div className="flex flex-col items-center">
