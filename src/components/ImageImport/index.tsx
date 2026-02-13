@@ -15,7 +15,7 @@ interface Props {
 /**
  * 导入
  */
-export default function (props: Props) {
+export default function ImageImport(props: Props) {
   const { onInitImageEnd } = props;
   const areaRef = useRef<HTMLDivElement | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);

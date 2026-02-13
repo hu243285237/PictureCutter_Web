@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import Header from './components/Header';
-import Selection from './components/Selection';
+import ImageImport from './components/ImageImport';
 import Option from './components/Option';
 import Preview from './components/Preview';
 import Export from './components/Export';
@@ -84,7 +84,7 @@ function App() {
   return (
     <div className="App text-center">
       <Header />
-      <Selection
+      <ImageImport
         onInitImageEnd={(imgURL: string): void => {
           setImgURL(imgURL);
         }}
