@@ -1,12 +1,25 @@
 import { useEffect, useState } from 'react';
 import { CutMode } from '../../utils/enum';
 import { OptionProps } from '../../utils/interface';
+import Step from '../Step';
 
+/**
+ * 参数
+ */
 interface Props {
+  /**
+   * 默认选项
+   */
   defaultOption: OptionProps;
-  onOptionChange: Function;
+  /**
+   * 选项更改回调
+   */
+  onOptionChange: (option: OptionProps) => void;
 }
 
+/**
+ * 选项
+ */
 export default function (props: Props) {
   const { defaultOption, onOptionChange } = props;
 
@@ -33,14 +46,13 @@ export default function (props: Props) {
   const frameCls = (mode: CutMode) =>
     `flex-1 ${cutMode === mode ? 'opacity-100' : 'opacity-30'}`;
   const titleCls = (mode: CutMode) =>
-    `cursor-pointer pb-2 text-center hover:text-antiquewhite ${
-      cutMode === mode ? 'border-b-[3px] border-solid border-white' : ''
+    `cursor-pointer pb-2 text-center hover:text-antiquewhite ${cutMode === mode ? 'border-b-[3px] border-solid border-white' : ''
     }`;
 
   return (
-    <div className="my-5 flex flex-col items-center justify-center text-aliceblue">
-      <h2>STEP 2: 选项</h2>
+    <Step step={2} title="选项">
       <div className="flex w-[600px] max-w-full justify-around gap-4">
+        {/* 以像素裁剪 */}
         <div className={frameCls(CutMode.PIXEL)}>
           <p
             className={titleCls(CutMode.PIXEL)}
@@ -79,6 +91,7 @@ export default function (props: Props) {
             </label>
           </div>
         </div>
+        {/* 以数量均等裁剪 */}
         <div className={frameCls(CutMode.AMOUNT)}>
           <p
             className={titleCls(CutMode.AMOUNT)}
@@ -119,6 +132,7 @@ export default function (props: Props) {
             </label>
           </div>
         </div>
+        {/* 以比例裁剪 */}
         <div className={frameCls(CutMode.SCALE)}>
           <p
             className={titleCls(CutMode.SCALE)}
@@ -158,6 +172,6 @@ export default function (props: Props) {
           </div>
         </div>
       </div>
-    </div>
+    </Step>
   );
 }

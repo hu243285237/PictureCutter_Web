@@ -1,4 +1,5 @@
 import { type ChangeEvent, useRef, useState } from 'react';
+import Step from '../Step';
 
 /**
  * 参数
@@ -12,7 +13,7 @@ interface Props {
 }
 
 /**
- * 选择图片组件
+ * 导入
  */
 export default function (props: Props) {
   const { onInitImageEnd } = props;
@@ -46,9 +47,9 @@ export default function (props: Props) {
   };
 
   return (
-    <div className="my-5 flex flex-col items-center justify-center text-aliceblue">
-      <h2>STEP 1: 导入</h2>
-      <div
+    <Step step={1} title="导入">
+      <div className="flex flex-col items-center justify-center w-full">
+        <div
         className="mb-4 flex h-[200px] w-[400px] max-w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-white"
         ref={areaRef}
         onClick={areaClick}
@@ -77,6 +78,7 @@ export default function (props: Props) {
           </p>
         </>
       ) : null}
-    </div>
+      </div>
+    </Step>
   );
 }
