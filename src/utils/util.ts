@@ -26,15 +26,20 @@ export function pixelCut(
   const amountRow = Math.ceil(img.width / pixelWidth);
   const amountCol = Math.ceil(img.height / pixelHeight);
   cutWorker.reset(CutMode.PIXEL);
-  createImageBitmap(img).then((imgSource) => {
-    cutWorker.worker.postMessage({
-      imgSource,
-      pixelWidth,
-      pixelHeight,
-      amountRow,
-      amountCol,
+  createImageBitmap(img)
+    .then((imgSource) => {
+      cutWorker.worker.postMessage({
+        imgSource,
+        pixelWidth,
+        pixelHeight,
+        amountRow,
+        amountCol,
+      });
+    })
+    .catch(() => {
+      alert('图片处理失败，请重试或更换图片');
+      callback([]);
     });
-  });
   setWorkerCallback(res, format, callback);
 }
 
@@ -60,15 +65,20 @@ export function amountCut(
   const pixelWidth = img.width / amountRow;
   const pixelHeight = img.height / amountCol;
   cutWorker.reset(CutMode.AMOUNT);
-  createImageBitmap(img).then((imgSource) => {
-    cutWorker.worker.postMessage({
-      imgSource,
-      pixelWidth,
-      pixelHeight,
-      amountRow,
-      amountCol,
+  createImageBitmap(img)
+    .then((imgSource) => {
+      cutWorker.worker.postMessage({
+        imgSource,
+        pixelWidth,
+        pixelHeight,
+        amountRow,
+        amountCol,
+      });
+    })
+    .catch(() => {
+      alert('图片处理失败，请重试或更换图片');
+      callback([]);
     });
-  });
   setWorkerCallback(res, format, callback);
 }
 
@@ -92,13 +102,18 @@ export function scaleCut(
   const img = new Image();
   img.src = imgURL;
   cutWorker.reset(CutMode.SCALE);
-  createImageBitmap(img).then((imgSource) => {
-    cutWorker.worker.postMessage({
-      imgSource,
-      scaleWidth,
-      scaleHeight,
+  createImageBitmap(img)
+    .then((imgSource) => {
+      cutWorker.worker.postMessage({
+        imgSource,
+        scaleWidth,
+        scaleHeight,
+      });
+    })
+    .catch(() => {
+      alert('图片处理失败，请重试或更换图片');
+      callback([]);
     });
-  });
   setWorkerCallback(res, format, callback);
 }
 

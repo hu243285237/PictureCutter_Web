@@ -1,24 +1,25 @@
-import { useRef, useState } from 'react';
+import { type ChangeEvent, useRef, useState } from 'react';
 
 interface Props {
-  onInitImageEnd: Function;
+  onInitImageEnd: (imgURL: string) => void;
 }
 
 export default function (props: Props) {
   const { onInitImageEnd } = props;
 
-  const areaRef = useRef<any>(null);
-  const fileInputRef = useRef<any>(null);
+  const areaRef = useRef<HTMLDivElement | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [fileName, setFileName] = useState<string>('');
   const [imgURL, setImgURL] = useState<string>('');
-  const [img, setImg] = useState<HTMLImageElement>();
+  const [img, setImg] = useState<HTMLImageElement | undefined>(undefined);
 
   const areaClick = (): void => {
     fileInputRef.current?.click();
   };
 
-  const initImage = (event: any): void => {
-    const file = event.target.files[0] as File;
+  const initImage = (event: ChangeEvent<HTMLInputElement>): void => {
+    const file = event.target.files?.[0];
+    if (!file) return;
     if (window.FileReader) {
       const fileReader = new FileReader();
       fileReader.readAsDataURL(file);

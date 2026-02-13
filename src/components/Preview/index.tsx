@@ -20,8 +20,9 @@ export default function (props: Props) {
     return () => clearInterval(timer);
   }, [cutImgsURL, animateIndex, speed]);
 
-  const handleSpeedChange = (event: any): void => {
-    setSpeed(event.target.value);
+  const handleSpeedChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const v = Number(event.target.value);
+    if (!Number.isNaN(v)) setSpeed(v);
   };
 
   return (
@@ -41,8 +42,19 @@ export default function (props: Props) {
               />
             ))}
           </div>
-          <div className="mt-5 flex flex-col items-center justify-center">
+          <div className="mt-5 flex flex-col items-center justify-center gap-2">
             <p>动态预览（按序列播放）</p>
+            <div className="flex items-center gap-2 text-sm">
+              <span>速度</span>
+              <input
+                type="range"
+                min={1}
+                max={10}
+                value={speed}
+                onChange={handleSpeedChange}
+                className="w-24 accent-white"
+              />
+            </div>
             <div className="flex h-[140px] w-[140px] items-center justify-center rounded-lg border-[3px] border-dashed border-white bg-aliceblue p-2.5">
               <img
                 className="max-h-full max-w-full shadow-[2px_2px_6px_2px_rgba(100,100,100,0.5)]"
