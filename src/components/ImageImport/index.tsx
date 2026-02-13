@@ -1,53 +1,41 @@
 import { type ChangeEvent, useRef, useState } from 'react';
+import { useAppContext } from '../../contexts';
 import Step from '../Step';
 
 /**
- * 参数
+ * 图片导入
  */
-interface Props {
-  /**
-   * 初始化图片结束回调
-   * @param imgURL 图片URL
-   */
-  onInitImageEnd: (imgURL: string) => void;
-}
-
-/**
- * 导入
- */
-export default function ImageImport(props: Props) {
-  const { onInitImageEnd } = props;
-  const areaRef = useRef<HTMLDivElement | null>(null);
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
+export default function ImageImport() {
+  const { imgURL, setImgURL } = useAppContext();
   const [fileName, setFileName] = useState<string>('');
-  const [imgURL, setImgURL] = useState<string>('');
-  const [img, setImg] = useState<HTMLImageElement | undefined>(undefined);
+  const [img, setImg] = useState<HTMLImageElement>();
+  const areaRef = useRef<HTMLDivElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   /**
-   * 图片区域点击
+   * 处理图片区域点击
    */
-  const areaClick = (): void => {
+  const handleAreaClick = () => {
     fileInputRef.current?.click();
   };
 
   /**
-   * 初始化图片
+   * 处理图片改变
    * @param event 事件
    */
-  const initImage = (event: ChangeEvent<HTMLInputElement>): void => {
+  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
     if (window.FileReader) {
       const fileReader = new FileReader();
       fileReader.readAsDataURL(file);
       fileReader.onloadend = (e) => {
-        setFileName(file.name);
         const imgURL = e.target?.result as string;
         const img = new Image();
         img.src = imgURL;
         setImg(img);
         setImgURL(imgURL);
-        onInitImageEnd(imgURL);
+        setFileName(file.name);
       };
     }
   };
@@ -58,14 +46,13 @@ export default function ImageImport(props: Props) {
       <div
         className="flex flex-col items-center justify-center mb-4 h-[200px] w-[400px] rounded-lg border border-dashed cursor-pointer"
         ref={areaRef}
-        onClick={areaClick}
+        onClick={handleAreaClick}
       >
         {imgURL ? (
           <img className="max-h-full max-w-full" src={imgURL} alt="" />
         ) : (
-          <div className='flex flex-col gap-2 text-base text-gray-400'>
+          <div className="flex flex-col items-center gap-2 text-base text-gray-400">
             <p>点击这里选择你要裁剪的图片</p>
-            <p>click here to select</p>
           </div>
         )}
         <input
@@ -73,12 +60,12 @@ export default function ImageImport(props: Props) {
           ref={fileInputRef}
           type="file"
           accept="image/*"
-          onChange={initImage}
+          onChange={handleImageChange}
         />
       </div>
       {/* 图片信息 */}
       {img && (
-        <p className='text-sm text-gray-400'>
+        <p className="text-sm text-gray-400">
           {fileName} - {img.width} * {img.height}
         </p>
       )}

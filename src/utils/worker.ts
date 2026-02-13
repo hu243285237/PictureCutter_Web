@@ -1,4 +1,4 @@
-import { CutMode } from './enum';
+import { CutMode } from '../common/enums';
 
 export default (function () {
   // 以像素裁剪和以数量裁剪的代码

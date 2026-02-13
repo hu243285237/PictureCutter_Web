@@ -1,4 +1,4 @@
-import { CutMode } from './enum';
+import { CutMode } from '../common/enums';
 import cutWorker from './worker';
 import { saveAs } from 'file-saver';
 import JSZip from 'jszip';
@@ -18,7 +18,7 @@ export function pixelCut(
   pixelWidth: number,
   pixelHeight: number,
   format: string,
-  callback: Function
+  callback: Function,
 ) {
   const res = new Array<string>();
   const img = new Image();
@@ -57,7 +57,7 @@ export function amountCut(
   amountRow: number,
   amountCol: number,
   format: string,
-  callback: Function
+  callback: Function,
 ) {
   const res = new Array<string>();
   const img = new Image();
@@ -96,7 +96,7 @@ export function scaleCut(
   scaleWidth: number,
   scaleHeight: number,
   format: string,
-  callback: Function
+  callback: Function,
 ) {
   const res = new Array<string>();
   const img = new Image();
@@ -160,7 +160,7 @@ export function exportImgs(imgsURL: Array<string>, format: string): void {
 function setWorkerCallback(
   resArr: string[],
   format: string,
-  callback: Function
+  callback: Function,
 ) {
   cutWorker.worker.onmessage = (e: MessageEvent) => {
     if (!e.data) return;

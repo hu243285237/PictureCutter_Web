@@ -1,47 +1,14 @@
-import { useEffect, useState } from 'react';
-import { CutMode } from '../../utils/enum';
-import { OptionProps } from '../../utils/interface';
+import { useAppContext } from '../../contexts';
+import { CutMode } from '../../common';
 import Step from '../Step';
-
-/**
- * 参数
- */
-interface Props {
-  /**
-   * 默认选项
-   */
-  defaultOption: OptionProps;
-  /**
-   * 选项更改回调
-   */
-  onOptionChange: (option: OptionProps) => void;
-}
 
 /**
  * 选项
  */
-export default function (props: Props) {
-  const { defaultOption, onOptionChange } = props;
+export default function Option() {
+  const { optionConfig, setOptionConfig } = useAppContext();
 
-  const [cutMode, setCutMode] = useState<CutMode>(defaultOption.cutMode);
-  const [pixel, setPixel] = useState<{ width: number; height: number }>(
-    defaultOption.pixel
-  );
-  const [amount, setAmount] = useState<{ row: number; col: number }>(
-    defaultOption.amount
-  );
-  const [scale, setScale] = useState<{ width: number; height: number }>(
-    defaultOption.scale
-  );
-
-  useEffect(() => {
-    onOptionChange({
-      cutMode,
-      pixel,
-      amount,
-      scale,
-    });
-  }, [cutMode, pixel, amount, scale]);
+  const { cutMode, pixel, amount, scale } = optionConfig;
 
   const frameCls = (mode: CutMode) =>
     `flex-1 ${cutMode === mode ? 'opacity-100' : 'opacity-30'}`;
@@ -56,7 +23,7 @@ export default function (props: Props) {
         <div className={frameCls(CutMode.PIXEL)}>
           <p
             className={titleCls(CutMode.PIXEL)}
-            onClick={() => setCutMode(CutMode.PIXEL)}
+            onClick={() => setOptionConfig({ ...optionConfig, cutMode: CutMode.PIXEL })}
           >
             以像素裁剪
           </p>
@@ -71,7 +38,7 @@ export default function (props: Props) {
                 onChange={(e): void => {
                   const value = parseFloat(e.target.value);
                   if (!value || value < 0) return;
-                  setPixel({ width: value, height: pixel.height });
+                  setOptionConfig({ ...optionConfig, pixel: { width: value, height: pixel.height } });
                 }}
               />
             </label>
@@ -85,7 +52,7 @@ export default function (props: Props) {
                 onChange={(e): void => {
                   const value = parseFloat(e.target.value);
                   if (!value || value < 0) return;
-                  setPixel({ width: pixel.width, height: value });
+                  setOptionConfig({ ...optionConfig, pixel: { width: pixel.width, height: value } });
                 }}
               />
             </label>
@@ -95,7 +62,7 @@ export default function (props: Props) {
         <div className={frameCls(CutMode.AMOUNT)}>
           <p
             className={titleCls(CutMode.AMOUNT)}
-            onClick={() => setCutMode(CutMode.AMOUNT)}
+            onClick={() => setOptionConfig({ ...optionConfig, cutMode: CutMode.AMOUNT })}
           >
             以数量均等裁剪
           </p>
@@ -111,7 +78,7 @@ export default function (props: Props) {
                 onChange={(e): void => {
                   const value = parseFloat(e.target.value);
                   if (!value || value < 0) return;
-                  setAmount({ row: value, col: amount.col });
+                  setOptionConfig({ ...optionConfig, amount: { row: value, col: amount.col } });
                 }}
               />
             </label>
@@ -126,7 +93,7 @@ export default function (props: Props) {
                 onChange={(e): void => {
                   const value = parseFloat(e.target.value);
                   if (!value || value < 0) return;
-                  setAmount({ row: amount.row, col: value });
+                  setOptionConfig({ ...optionConfig, amount: { row: amount.row, col: value } });
                 }}
               />
             </label>
@@ -136,7 +103,7 @@ export default function (props: Props) {
         <div className={frameCls(CutMode.SCALE)}>
           <p
             className={titleCls(CutMode.SCALE)}
-            onClick={() => setCutMode(CutMode.SCALE)}
+            onClick={() => setOptionConfig({ ...optionConfig, cutMode: CutMode.SCALE })}
           >
             以比例裁剪
           </p>
@@ -151,7 +118,7 @@ export default function (props: Props) {
                 onChange={(e): void => {
                   const value = parseFloat(e.target.value);
                   if (!value || value < 0) return;
-                  setScale({ width: value, height: scale.height });
+                  setOptionConfig({ ...optionConfig, scale: { width: value, height: scale.height } });
                 }}
               />
             </label>
@@ -165,7 +132,7 @@ export default function (props: Props) {
                 onChange={(e): void => {
                   const value = parseFloat(e.target.value);
                   if (!value || value < 0) return;
-                  setScale({ width: scale.width, height: value });
+                  setOptionConfig({ ...optionConfig, scale: { width: scale.width, height: value } });
                 }}
               />
             </label>

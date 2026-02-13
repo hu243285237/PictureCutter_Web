@@ -21,7 +21,7 @@ const navItems = [
 ];
 
 /**
- * 头部组件
+ * 标题
  */
 export default function () {
   return (
