@@ -1,9 +1,19 @@
 import { type ChangeEvent, useRef, useState } from 'react';
 
+/**
+ * 参数
+ */
 interface Props {
+  /**
+   * 初始化图片结束回调
+   * @param imgURL 图片URL
+   */
   onInitImageEnd: (imgURL: string) => void;
 }
 
+/**
+ * 选择图片组件
+ */
 export default function (props: Props) {
   const { onInitImageEnd } = props;
 

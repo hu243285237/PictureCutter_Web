@@ -1,42 +1,14 @@
-@import "tailwindcss";
-
-@theme {
-  @keyframes logo-spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-}
-
-html,
-body {
-  overflow-x: hidden; /* 避免固定宽度块（如 600px 选项区）在窄屏下撑出横向滚动条 */
-}
+@import 'tailwindcss';
 
 body {
   margin: 0;
   background-color: #282c34;
-  color: #f0f8ff; /* aliceblue，整页默认浅色字 */
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  color: #f0f8ff;
 }
 
 h2 {
   color: rgb(226, 220, 137);
-  margin: 0 0 0.5em;
-}
-
-
-.animate-logo-spin {
-  animation: logo-spin 20s linear infinite;
+  margin: 0 0 2rem;
+  font-size: 1.25rem;
+  font-weight: bold;
 }

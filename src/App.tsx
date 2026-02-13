@@ -8,6 +8,9 @@ import { CutMode } from './utils/enum';
 import { OptionProps } from './utils/interface';
 import { amountCut, pixelCut, scaleCut } from './utils/util';
 
+/**
+ * App
+ */
 function App() {
   const [imgURL, setImgURL] = useState<string>('');
   const [imgFormat, setImgFormat] = useState<string>('');
@@ -67,7 +70,10 @@ function App() {
     }
   }, [imgURL, option]);
 
-  // 处理当选项配置更改时
+  /**
+   * 处理选项配置更改时
+   * @param option 选项配置
+   */
   const handleOptionChange = (option: OptionProps): void => {
     if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => {
@@ -77,12 +83,12 @@ function App() {
 
   return (
     <div className="App text-center">
-      <Header></Header>
+      <Header />
       <Selection
         onInitImageEnd={(imgURL: string): void => {
           setImgURL(imgURL);
         }}
-      ></Selection>
+      />
       {cutImgsURL.length ? (
         <>
           <Option
@@ -90,11 +96,13 @@ function App() {
             onOptionChange={(option: OptionProps): void => {
               handleOptionChange(option);
             }}
-          ></Option>
-          <Preview cutImgsURL={cutImgsURL}></Preview>
-          <Export imgsURL={cutImgsURL} format={imgFormat}></Export>
+          />
+          <Preview cutImgsURL={cutImgsURL} />
+          <Export imgsURL={cutImgsURL} format={imgFormat} />
         </>
-      ) : null}
+      ) : (
+        <></>
+      )}
     </div>
   );
 }

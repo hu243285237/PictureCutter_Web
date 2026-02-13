@@ -1,0 +1,12 @@
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.header__logo-spin {
+  animation: logo-spin 20s linear infinite;
+}
