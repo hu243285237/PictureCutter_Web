@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react';
-import './index.scss';
 
 interface Props {
   onInitImageEnd: Function;
@@ -14,12 +13,10 @@ export default function (props: Props) {
   const [imgURL, setImgURL] = useState<string>('');
   const [img, setImg] = useState<HTMLImageElement>();
 
-  // 区域点击事件
   const areaClick = (): void => {
     fileInputRef.current?.click();
   };
 
-  // 初始化图片
   const initImage = (event: any): void => {
     const file = event.target.files[0] as File;
     if (window.FileReader) {
@@ -38,11 +35,15 @@ export default function (props: Props) {
   };
 
   return (
-    <div className="selection-container">
+    <div className="my-5 flex flex-col items-center justify-center text-aliceblue">
       <h2>STEP 1: 导入</h2>
-      <div className="area" ref={areaRef} onClick={areaClick}>
+      <div
+        className="mb-4 flex h-[200px] w-[400px] max-w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-white"
+        ref={areaRef}
+        onClick={areaClick}
+      >
         {imgURL ? (
-          <img className="area-img" src={imgURL}></img>
+          <img className="max-h-full max-w-full" src={imgURL} alt="" />
         ) : (
           <div>
             <p>点击这里选择你要裁剪的图片</p>
@@ -50,17 +51,17 @@ export default function (props: Props) {
           </div>
         )}
         <input
-          className="area-file-input"
+          className="hidden"
           ref={fileInputRef}
-          type={'file'}
+          type="file"
           accept="image/*"
           onChange={initImage}
-        ></input>
+        />
       </div>
       {img ? (
         <>
-          <p className="area-info">当前选择的图片：{fileName}</p>
-          <p className="area-info">
+          <p className="my-1.5">当前选择的图片：{fileName}</p>
+          <p className="my-1.5">
             当前图片宽度和高度：{img.width} * {img.height}
           </p>
         </>

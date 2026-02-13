@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Header from './components/Header';
 import Selection from './components/Selection';
 import Option from './components/Option';
@@ -7,7 +7,6 @@ import Export from './components/Export';
 import { CutMode } from './utils/enum';
 import { OptionProps } from './utils/interface';
 import { amountCut, pixelCut, scaleCut } from './utils/util';
-import './App.css';
 
 function App() {
   const [imgURL, setImgURL] = useState<string>('');
@@ -18,9 +17,8 @@ function App() {
     amount: { row: 1, col: 1 },
     scale: { width: 1, height: 1 },
   });
-  const [cuttedImgsURL, setCuttedImgsURL] = useState<Array<string>>([]);
-
-  let timer: NodeJS.Timer;
+  const [cutImgsURL, setCutImgsURL] = useState<Array<string>>([]);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const format = imgURL.split(';')[0].split('/')[1];
@@ -38,7 +36,7 @@ function App() {
           pixel.height,
           imgFormat,
           (imgsURL: string[]) => {
-            setCuttedImgsURL(imgsURL);
+            setCutImgsURL(imgsURL);
           }
         );
         break;
@@ -49,7 +47,7 @@ function App() {
           amount.col,
           imgFormat,
           (imgsURL: string[]) => {
-            setCuttedImgsURL(imgsURL);
+            setCutImgsURL(imgsURL);
           }
         );
         break;
@@ -60,7 +58,7 @@ function App() {
           scale.height,
           imgFormat,
           (imgsURL: string[]) => {
-            setCuttedImgsURL(imgsURL);
+            setCutImgsURL(imgsURL);
           }
         );
         break;
@@ -71,21 +69,21 @@ function App() {
 
   // 处理当选项配置更改时
   const handleOptionChange = (option: OptionProps): void => {
-    clearTimeout(timer);
-    timer = setTimeout(() => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => {
       setOption(option);
     }, 500);
   };
 
   return (
-    <div className="App">
+    <div className="App text-center">
       <Header></Header>
       <Selection
         onInitImageEnd={(imgURL: string): void => {
           setImgURL(imgURL);
         }}
       ></Selection>
-      {cuttedImgsURL.length ? (
+      {cutImgsURL.length ? (
         <>
           <Option
             defaultOption={option}
@@ -93,8 +91,8 @@ function App() {
               handleOptionChange(option);
             }}
           ></Option>
-          <Preview cuttedImgsURL={cuttedImgsURL}></Preview>
-          <Export imgsURL={cuttedImgsURL} format={imgFormat}></Export>
+          <Preview cutImgsURL={cutImgsURL}></Preview>
+          <Export imgsURL={cutImgsURL} format={imgFormat}></Export>
         </>
       ) : null}
     </div>

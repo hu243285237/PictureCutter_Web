@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { CutMode } from '../../utils/enum';
 import { OptionProps } from '../../utils/interface';
-import './index.scss';
 
 interface Props {
   defaultOption: OptionProps;
@@ -31,88 +30,67 @@ export default function (props: Props) {
     });
   }, [cutMode, pixel, amount, scale]);
 
+  const frameCls = (mode: CutMode) =>
+    `flex-1 ${cutMode === mode ? 'opacity-100' : 'opacity-30'}`;
+  const titleCls = (mode: CutMode) =>
+    `cursor-pointer pb-2 text-center hover:text-antiquewhite ${
+      cutMode === mode ? 'border-b-[3px] border-solid border-white' : ''
+    }`;
+
   return (
-    <div className="option-container">
+    <div className="my-5 flex flex-col items-center justify-center text-aliceblue">
       <h2>STEP 2: 选项</h2>
-      <div className="frame">
-        {/* 以像素裁剪 */}
-        <div
-          className={[
-            'frame-content',
-            cutMode === CutMode.PIXEL && 'frame-content-checked',
-          ].join(' ')}
-        >
+      <div className="flex w-[600px] max-w-full justify-around gap-4">
+        <div className={frameCls(CutMode.PIXEL)}>
           <p
-            className={[
-              'frame-content-title',
-              cutMode === CutMode.PIXEL && 'frame-content-title-checked',
-            ].join(' ')}
-            onClick={() => {
-              setCutMode(CutMode.PIXEL);
-            }}
+            className={titleCls(CutMode.PIXEL)}
+            onClick={() => setCutMode(CutMode.PIXEL)}
           >
             以像素裁剪
           </p>
-          <div className="frame-content-list">
-            <label className="frame-content-list-item">
+          <div className="mt-1 w-full space-y-1">
+            <label className="flex items-center justify-center gap-2">
               <p>宽:</p>
               <input
-                className="frame-content-list-item-input"
+                className="w-[42px]"
                 type="number"
                 defaultValue={pixel.width}
                 min={1}
                 onChange={(e): void => {
                   const value = parseFloat(e.target.value);
                   if (!value || value < 0) return;
-                  setPixel({
-                    width: value,
-                    height: pixel.height,
-                  });
+                  setPixel({ width: value, height: pixel.height });
                 }}
-              ></input>
+              />
             </label>
-            <label className="frame-content-list-item">
+            <label className="flex items-center justify-center gap-2">
               <p>高:</p>
               <input
-                className="frame-content-list-item-input"
+                className="w-[42px]"
                 type="number"
                 defaultValue={pixel.height}
                 min={1}
                 onChange={(e): void => {
                   const value = parseFloat(e.target.value);
                   if (!value || value < 0) return;
-                  setPixel({
-                    width: pixel.width,
-                    height: value,
-                  });
+                  setPixel({ width: pixel.width, height: value });
                 }}
-              ></input>
+              />
             </label>
           </div>
         </div>
-        {/* 以数量裁剪 */}
-        <div
-          className={[
-            'frame-content',
-            cutMode === CutMode.AMOUNT && 'frame-content-checked',
-          ].join(' ')}
-        >
+        <div className={frameCls(CutMode.AMOUNT)}>
           <p
-            className={[
-              'frame-content-title',
-              cutMode === CutMode.AMOUNT && 'frame-content-title-checked',
-            ].join(' ')}
-            onClick={() => {
-              setCutMode(CutMode.AMOUNT);
-            }}
+            className={titleCls(CutMode.AMOUNT)}
+            onClick={() => setCutMode(CutMode.AMOUNT)}
           >
             以数量均等裁剪
           </p>
-          <div className="frame-content-list">
-            <label className="frame-content-list-item">
+          <div className="mt-1 w-full space-y-1">
+            <label className="flex items-center justify-center gap-2">
               <p>横向切割成几份:</p>
               <input
-                className="frame-content-list-item-input"
+                className="w-[42px]"
                 type="number"
                 defaultValue={amount.row}
                 min={1}
@@ -120,17 +98,14 @@ export default function (props: Props) {
                 onChange={(e): void => {
                   const value = parseFloat(e.target.value);
                   if (!value || value < 0) return;
-                  setAmount({
-                    row: value,
-                    col: amount.col,
-                  });
+                  setAmount({ row: value, col: amount.col });
                 }}
-              ></input>
+              />
             </label>
-            <label className="frame-content-list-item">
+            <label className="flex items-center justify-center gap-2">
               <p>纵向切割成几份:</p>
               <input
-                className="frame-content-list-item-input"
+                className="w-[42px]"
                 type="number"
                 defaultValue={amount.col}
                 min={1}
@@ -138,67 +113,47 @@ export default function (props: Props) {
                 onChange={(e): void => {
                   const value = parseFloat(e.target.value);
                   if (!value || value < 0) return;
-                  setAmount({
-                    row: amount.row,
-                    col: value,
-                  });
+                  setAmount({ row: amount.row, col: value });
                 }}
-              ></input>
+              />
             </label>
           </div>
         </div>
-        {/* 以比例裁剪 */}
-        <div
-          className={[
-            'frame-content',
-            cutMode === CutMode.SCALE && 'frame-content-checked',
-          ].join(' ')}
-        >
+        <div className={frameCls(CutMode.SCALE)}>
           <p
-            className={[
-              'frame-content-title',
-              cutMode === CutMode.SCALE && 'frame-content-title-checked',
-            ].join(' ')}
-            onClick={() => {
-              setCutMode(CutMode.SCALE);
-            }}
+            className={titleCls(CutMode.SCALE)}
+            onClick={() => setCutMode(CutMode.SCALE)}
           >
             以比例裁剪
           </p>
-          <div className="frame-content-list">
-            <label className="frame-content-list-item">
+          <div className="mt-1 w-full space-y-1">
+            <label className="flex items-center justify-center gap-2">
               <p>宽:</p>
               <input
-                className="frame-content-list-item-input"
+                className="w-[42px]"
                 type="number"
                 defaultValue={scale.width}
                 min={0}
                 onChange={(e): void => {
                   const value = parseFloat(e.target.value);
                   if (!value || value < 0) return;
-                  setScale({
-                    width: value,
-                    height: scale.height,
-                  });
+                  setScale({ width: value, height: scale.height });
                 }}
-              ></input>
+              />
             </label>
-            <label className="frame-content-list-item">
+            <label className="flex items-center justify-center gap-2">
               <p>高:</p>
               <input
-                className="frame-content-list-item-input"
+                className="w-[42px]"
                 type="number"
                 defaultValue={scale.height}
                 min={0}
                 onChange={(e): void => {
                   const value = parseFloat(e.target.value);
                   if (!value || value < 0) return;
-                  setScale({
-                    width: scale.width,
-                    height: value,
-                  });
+                  setScale({ width: scale.width, height: value });
                 }}
-              ></input>
+              />
             </label>
           </div>
         </div>

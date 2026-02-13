@@ -1,5 +1,4 @@
 import { exportImgs } from '../../utils/util';
-import './index.scss';
 
 interface Props {
   imgsURL: Array<string>;
@@ -9,28 +8,23 @@ interface Props {
 export default function (props: Props) {
   const { imgsURL, format } = props;
 
-  // 处理导出图片
   const handleExport = (format: string): void => {
     exportImgs(imgsURL, format);
   };
 
   return (
-    <div className="export-container">
+    <div className="my-5 mb-10 flex flex-col items-center justify-center text-aliceblue">
       <h2>STEP 4: 导出</h2>
-      <div className="list">
+      <div className="flex">
         <label
-          className="list-item"
-          onClick={() => {
-            handleExport(format);
-          }}
+          className="mx-[18px] my-6 w-[120px] cursor-pointer rounded-[18px] border-2 border-white px-[18px] py-2 transition-[background-color,color,box-shadow] duration-100 hover:scale-105 hover:bg-wheat hover:font-bold hover:text-black hover:shadow-[1px_1px_6px_1px_rgba(255,255,255,0.5)]"
+          onClick={() => handleExport(format)}
         >
           导出为图片组
         </label>
         <label
-          className="list-item"
-          onClick={() => {
-            handleExport('pdf');
-          }}
+          className="mx-[18px] my-6 w-[120px] cursor-pointer rounded-[18px] border-2 border-white px-[18px] py-2 transition-[background-color,color,box-shadow] duration-100 hover:scale-105 hover:bg-wheat hover:font-bold hover:text-black hover:shadow-[1px_1px_6px_1px_rgba(255,255,255,0.5)]"
+          onClick={() => handleExport('pdf')}
         >
           导出为 PDF
         </label>
