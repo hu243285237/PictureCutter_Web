@@ -1,5 +1,17 @@
-import { createContext, useContext, useEffect, useRef, useState, ReactNode } from 'react';
-import { CutMode, OptionConfig, AppContextType, DEFAULT_OPTION_CONFIG } from '../common';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  ReactNode,
+} from 'react';
+import {
+  CutMode,
+  OptionConfig,
+  AppContextType,
+  DEFAULT_OPTION_CONFIG,
+} from '../common';
 import { amountCut, pixelCut, scaleCut } from '../utils/util';
 
 /**
@@ -19,7 +31,9 @@ export function AppProvider(props: Props) {
   const { children } = props;
   const [imgURL, setImgURL] = useState<string>('');
   const [imgFormat, setImgFormat] = useState<string>('');
-  const [optionConfig, setOptionConfig] = useState<OptionConfig>(DEFAULT_OPTION_CONFIG);
+  const [optionConfig, setOptionConfig] = useState<OptionConfig>(
+    DEFAULT_OPTION_CONFIG,
+  );
   const [cutImgsURL, setCutImgsURL] = useState<Array<string>>([]);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -55,7 +69,7 @@ export function AppProvider(props: Props) {
           imgFormat,
           (imgsURL: string[]) => {
             setCutImgsURL(imgsURL);
-          }
+          },
         );
         break;
       case CutMode.AMOUNT:
@@ -66,7 +80,7 @@ export function AppProvider(props: Props) {
           imgFormat,
           (imgsURL: string[]) => {
             setCutImgsURL(imgsURL);
-          }
+          },
         );
         break;
       case CutMode.SCALE:
@@ -77,7 +91,7 @@ export function AppProvider(props: Props) {
           imgFormat,
           (imgsURL: string[]) => {
             setCutImgsURL(imgsURL);
-          }
+          },
         );
         break;
       default:
@@ -90,10 +104,10 @@ export function AppProvider(props: Props) {
    * @param newOption 选项配置
    */
   const handleOptionConfigChange = (newOptionConfig: OptionConfig) => {
-    if (timerRef.current) clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => {
-      setOptionConfig(newOptionConfig);
-    }, 500);
+    setOptionConfig(newOptionConfig);
+    // if (timerRef.current) clearTimeout(timerRef.current);
+    // timerRef.current = setTimeout(() => {
+    // }, 500);
   };
 
   const value: AppContextType = {
@@ -105,11 +119,7 @@ export function AppProvider(props: Props) {
     setOptionConfig: handleOptionConfigChange,
   };
 
-  return (
-    <AppContext.Provider value={value}>
-      {children}
-    </AppContext.Provider>
-  );
+  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
 
 const AppContext = createContext<AppContextType>(null as any);

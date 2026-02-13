@@ -8,7 +8,7 @@ import Step from '../Step';
 export default function Preview() {
   const { cutImgsURL } = useAppContext();
   const [animateIndex, setAnimateIndex] = useState<number>(0);
-  const [speed, setSpeed] = useState<number>(5);
+  const [speed, setSpeed] = useState<number>(1);
   const prevCutImgsURLRef = useRef<string>('');
 
   useEffect(() => {
@@ -46,50 +46,52 @@ export default function Preview() {
     if (!Number.isNaN(v)) setSpeed(v);
   };
 
-  const staticPreviewImages = useMemo(() => {
-    return cutImgsURL.map((item, index) => (
-      <img
-        className="mx-2 max-h-full max-w-full shadow-[2px_2px_6px_2px_rgba(100,100,100,0.5)]"
-        key={index}
-        src={item}
-        alt=""
-        draggable="false"
-      />
-    ));
-  }, [cutImgsURL]);
-
   return (
     <Step step={3} title="预览">
-      {/* 静态预览 */}
-      <div>
-        <p>静态预览（共切割成 {cutImgsURL.length} 张图片）</p>
-        <div className="flex h-[140px] w-[390px] max-w-full items-center overflow-x-scroll rounded-lg border border-dashed bg-aliceblue p-2.5">
-          {staticPreviewImages}
+      {cutImgsURL.length && (
+        <div className="flex flex-row gap-10">
+          {/* 静态预览 */}
+          <div className="flex flex-col items-center">
+            <li className="flex p-2.5 h-[150px] w-[400px] max-w-full bg-[#f0f8ff] rounded-lg border border-dashed overflow-x-scroll">
+              {cutImgsURL.map((item, index) => (
+                <img
+                  className="mx-2 max-h-full max-w-full shadow-[2px_2px_6px_2px_rgba(100,100,100,0.5)]"
+                  key={index}
+                  src={item}
+                  alt=""
+                  draggable="false"
+                />
+              ))}
+            </li>
+            <p className="mt-4 text-sm text-gray-400">
+              静态预览（共切割成 {cutImgsURL.length} 张图片）
+            </p>
+          </div>
+          {/* 动态预览 */}
+          <div className="flex flex-col items-center">
+            <div className="flex justify-center items-center p-2.5 h-[150px] w-[150px] bg-[#f0f8ff] rounded-lg border border-dashed">
+              <img
+                className="max-h-full max-w-full shadow-[2px_2px_6px_2px_rgba(100,100,100,0.5)]"
+                src={cutImgsURL[animateIndex]}
+                alt=""
+                draggable="false"
+              />
+            </div>
+            <p className="mt-4 text-sm text-gray-400">动态预览</p>
+            {/* <div className="flex items-center gap-2 mt-4 text-sm">
+              <span>速度</span>
+              <input
+                type="range"
+                min={1}
+                max={10}
+                value={speed}
+                onChange={handleSpeedChange}
+                className="w-24 accent-white"
+              />
+            </div> */}
+          </div>
         </div>
-      </div>
-      {/* 动态预览 */}
-      <div>
-        <p>动态预览（按序列播放）</p>
-        <div className="flex items-center gap-2 text-sm">
-          <span>速度</span>
-          <input
-            type="range"
-            min={1}
-            max={10}
-            value={speed}
-            onChange={handleSpeedChange}
-            className="w-24 accent-white"
-          />
-        </div>
-        <div className="flex h-[140px] w-[140px] items-center justify-center rounded-lg border border-dashed bg-aliceblue p-2.5">
-          <img
-            className="max-h-full max-w-full shadow-[2px_2px_6px_2px_rgba(100,100,100,0.5)]"
-            src={cutImgsURL[animateIndex]}
-            alt=""
-            draggable="false"
-          />
-        </div>
-      </div>
+      )}
     </Step>
   );
 }
