@@ -23,7 +23,7 @@ interface Props {
  */
 export default function Step({ step, title, children }: Props) {
     return (
-        <div className="my-16 flex flex-col items-center justify-center w-full">
+        <div className="mb-16 flex flex-col items-center justify-center w-full">
             <h2 className="mb-6 text-xl font-bold text-[rgb(226,220,137)]">
                 STEP {step}: {title}
             </h2>

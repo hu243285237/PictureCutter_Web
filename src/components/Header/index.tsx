@@ -3,7 +3,7 @@ import logo from '../../logo.svg';
 import './index.css';
 
 const navLinkClass =
-  'cursor-pointer border-b border-white text-[16px] text-aliceblue hover:text-wheat';
+  'cursor-pointer border-b border-white text-[#F0F8FF] hover:text-[#F5DEB3]';
 
 const navItems = [
   {
@@ -27,11 +27,11 @@ export default function () {
   return (
     <header className="my-5 flex flex-col items-center justify-center">
       {/* 标题 */}
-      <h1 className="my-6 text-[56px] font-bold">PICTURE CUTTER</h1>
+      <h1 className="my-6 text-[52px] font-bold">PICTURE CUTTER</h1>
       {/* 描述 */}
-      <p className="my-4 text-[20px]">一个将长图片自动分段切割的工具</p>
+      <p className="my-4 text-[18px]">一个将长图片自动分段切割的工具</p>
       {/* 导航 */}
-      <div className="flex gap-4 mb-9">
+      <div className="flex gap-4 mb-4">
         {navItems.map((item) => (
           <label
             key={item.href}
@@ -43,7 +43,7 @@ export default function () {
         ))}
       </div>
       {/* 图片 */}
-      <div className="h-[120px] w-[120px]">
+      <div className="h-[160px] w-[160px]">
         <img
           className="header__logo-spin h-full w-full pointer-events-none select-none"
           src={logo}
