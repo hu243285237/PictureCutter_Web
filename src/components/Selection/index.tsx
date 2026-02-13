@@ -17,17 +17,23 @@ interface Props {
  */
 export default function (props: Props) {
   const { onInitImageEnd } = props;
-
   const areaRef = useRef<HTMLDivElement | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [fileName, setFileName] = useState<string>('');
   const [imgURL, setImgURL] = useState<string>('');
   const [img, setImg] = useState<HTMLImageElement | undefined>(undefined);
 
+  /**
+   * 图片区域点击
+   */
   const areaClick = (): void => {
     fileInputRef.current?.click();
   };
 
+  /**
+   * 初始化图片
+   * @param event 事件
+   */
   const initImage = (event: ChangeEvent<HTMLInputElement>): void => {
     const file = event.target.files?.[0];
     if (!file) return;
@@ -48,16 +54,16 @@ export default function (props: Props) {
 
   return (
     <Step step={1} title="导入">
-      <div className="flex flex-col items-center justify-center w-full">
-        <div
-        className="mb-4 flex h-[200px] w-[400px] max-w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-white"
+      {/* 图片区域 */}
+      <div
+        className="flex flex-col items-center justify-center mb-4 h-[200px] w-[400px] rounded-lg border border-dashed cursor-pointer"
         ref={areaRef}
         onClick={areaClick}
       >
         {imgURL ? (
           <img className="max-h-full max-w-full" src={imgURL} alt="" />
         ) : (
-          <div>
+          <div className='flex flex-col gap-2 text-base text-gray-400'>
             <p>点击这里选择你要裁剪的图片</p>
             <p>click here to select</p>
           </div>
@@ -70,15 +76,12 @@ export default function (props: Props) {
           onChange={initImage}
         />
       </div>
-      {img ? (
-        <>
-          <p className="my-1.5">当前选择的图片：{fileName}</p>
-          <p className="my-1.5">
-            当前图片宽度和高度：{img.width} * {img.height}
-          </p>
-        </>
-      ) : null}
-      </div>
+      {/* 图片信息 */}
+      {img && (
+        <p className='text-sm text-gray-400'>
+          {fileName} - {img.width} * {img.height}
+        </p>
+      )}
     </Step>
   );
 }
