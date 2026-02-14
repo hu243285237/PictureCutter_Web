@@ -31,6 +31,8 @@ export function AppProvider(props: Props) {
   const { children } = props;
   const [imgURL, setImgURL] = useState<string>('');
   const [imgFormat, setImgFormat] = useState<string>('');
+  const [imgWidth, setImgWidth] = useState<number>(0);
+  const [imgHeight, setImgHeight] = useState<number>(0);
   const [optionConfig, setOptionConfig] = useState<OptionConfig>(
     DEFAULT_OPTION_CONFIG,
   );
@@ -40,6 +42,12 @@ export function AppProvider(props: Props) {
     if (imgURL) {
       const format = imgURL.split(';')[0].split('/')[1];
       setImgFormat(format);
+      const img = new Image();
+      img.onload = () => {
+        setImgWidth(img.naturalWidth);
+        setImgHeight(img.naturalHeight);
+      };
+      img.src = imgURL;
     }
   }, [imgURL]);
 
@@ -95,6 +103,8 @@ export function AppProvider(props: Props) {
   const value: AppContextType = {
     imgURL,
     imgFormat,
+    imgWidth,
+    imgHeight,
     optionConfig,
     cutImgsURL,
     setImgURL,

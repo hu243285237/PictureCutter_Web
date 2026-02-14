@@ -7,7 +7,8 @@ import Step from '../Step';
  * 选项
  */
 export default function Option() {
-  const { optionConfig, setOptionConfig } = useAppContext();
+  const { imgWidth, imgHeight, optionConfig, setOptionConfig } =
+    useAppContext();
 
   const { cutMode, pixel, amount, scale } = optionConfig;
 
@@ -40,15 +41,15 @@ export default function Option() {
               <InputNumber
                 className={inputNumberCls}
                 min={1}
+                max={imgWidth}
                 step={1}
                 precision={0}
                 value={pixel.width}
                 onChange={(value) => {
-                  const v = Math.floor(Number(value) || 1);
-                  if (v < 1) return;
+                  if (value === null) return;
                   setOptionConfig({
                     ...optionConfig,
-                    pixel: { width: v, height: pixel.height },
+                    pixel: { width: value, height: pixel.height },
                   });
                 }}
               />
@@ -59,15 +60,15 @@ export default function Option() {
               <InputNumber
                 className={inputNumberCls}
                 min={1}
+                max={imgHeight}
                 step={1}
                 precision={0}
                 value={pixel.height}
                 onChange={(value) => {
-                  const v = Math.floor(Number(value) || 1);
-                  if (v < 1) return;
+                  if (value === null) return;
                   setOptionConfig({
                     ...optionConfig,
-                    pixel: { width: pixel.width, height: v },
+                    pixel: { width: pixel.width, height: value },
                   });
                 }}
               />
@@ -91,15 +92,15 @@ export default function Option() {
               <InputNumber
                 className={inputNumberCls}
                 min={1}
+                max={imgWidth}
                 step={1}
                 precision={0}
                 value={amount.row}
                 onChange={(value) => {
-                  const v = Math.floor(Number(value) || 1);
-                  if (v < 1) return;
+                  if (value === null) return;
                   setOptionConfig({
                     ...optionConfig,
-                    amount: { row: v, col: amount.col },
+                    amount: { row: value, col: amount.col },
                   });
                 }}
               />
@@ -110,15 +111,15 @@ export default function Option() {
               <InputNumber
                 className={inputNumberCls}
                 min={1}
+                max={imgHeight}
                 step={1}
                 precision={0}
                 value={amount.col}
                 onChange={(value) => {
-                  const v = Math.floor(Number(value) || 1);
-                  if (v < 1) return;
+                  if (value === null) return;
                   setOptionConfig({
                     ...optionConfig,
-                    amount: { row: amount.row, col: v },
+                    amount: { row: amount.row, col: value },
                   });
                 }}
               />
@@ -144,11 +145,10 @@ export default function Option() {
                 min={1}
                 value={scale.width}
                 onChange={(value) => {
-                  const v = value ?? 1;
-                  if (v < 1) return;
+                  if (value === null) return;
                   setOptionConfig({
                     ...optionConfig,
-                    scale: { width: v, height: scale.height },
+                    scale: { width: value, height: scale.height },
                   });
                 }}
               />
@@ -161,11 +161,10 @@ export default function Option() {
                 min={1}
                 value={scale.height}
                 onChange={(value) => {
-                  const v = value ?? 1;
-                  if (v < 1) return;
+                  if (value === null) return;
                   setOptionConfig({
                     ...optionConfig,
-                    scale: { width: scale.width, height: v },
+                    scale: { width: scale.width, height: value },
                   });
                 }}
               />

@@ -16,6 +16,8 @@ export const DEFAULT_OPTION_CONFIG: OptionConfig = {
 export const DEFAULT_APP_CONTEXT_VALUE: AppContextType = {
   imgURL: '',
   imgFormat: '',
+  imgWidth: 0,
+  imgHeight: 0,
   optionConfig: DEFAULT_OPTION_CONFIG,
   cutImgsURL: [],
   setImgURL: () => {},

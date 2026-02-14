@@ -35,6 +35,14 @@ export interface AppContextType {
    */
   imgFormat: string;
   /**
+   * 图片宽度（像素）
+   */
+  imgWidth: number;
+  /**
+   * 图片高度（像素）
+   */
+  imgHeight: number;
+  /**
    * 选项配置
    */
   optionConfig: OptionConfig;
