@@ -10,6 +10,7 @@ import {
   OptionConfig,
   AppContextType,
   DEFAULT_OPTION_CONFIG,
+  DEFAULT_APP_CONTEXT_VALUE,
 } from '../common';
 import { amountCut, pixelCut, scaleCut } from '../utils/util';
 
@@ -103,6 +104,6 @@ export function AppProvider(props: Props) {
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
 
-const AppContext = createContext<AppContextType>(null as any);
+const AppContext = createContext<AppContextType>(DEFAULT_APP_CONTEXT_VALUE);
 
 export const useAppContext = () => useContext(AppContext);

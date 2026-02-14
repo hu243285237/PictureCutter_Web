@@ -1,8 +1,9 @@
-import { CutMode } from '../common/enums';
-import cutWorker from './worker';
+import { message } from 'antd';
 import { saveAs } from 'file-saver';
 import JSZip from 'jszip';
 import jsPDF from 'jspdf';
+import { CutMode } from '../common';
+import cutWorker from './worker';
 
 /**
  * 以像素裁剪图片
@@ -171,5 +172,8 @@ function setWorkerCallback(
     context?.transferFromImageBitmap(imageBitmap);
     resArr.push(canvas.toDataURL('image/' + format, 1.0));
     callback && callback([...resArr]);
+  };
+  cutWorker.worker.onerror = () => {
+    message.error('图片处理失败，请检查图片或参数');
   };
 }
