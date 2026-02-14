@@ -2,7 +2,6 @@ import {
   createContext,
   useContext,
   useEffect,
-  useRef,
   useState,
   ReactNode,
 } from 'react';
@@ -34,14 +33,7 @@ export function AppProvider(props: Props) {
   const [optionConfig, setOptionConfig] = useState<OptionConfig>(
     DEFAULT_OPTION_CONFIG,
   );
-  const [cutImgsURL, setCutImgsURL] = useState<Array<string>>([]);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  console.log('--------------------------------');
-  console.log('imgURL', imgURL);
-  console.log('imgFormat', imgFormat);
-  console.log('optionConfig', optionConfig);
-  console.log('cutImgsURL', cutImgsURL);
+  const [cutImgsURL, setCutImgsURL] = useState<string[]>([]);
 
   useEffect(() => {
     if (imgURL) {
@@ -99,24 +91,13 @@ export function AppProvider(props: Props) {
     }
   };
 
-  /**
-   * 处理选项配置更改时
-   * @param newOption 选项配置
-   */
-  const handleOptionConfigChange = (newOptionConfig: OptionConfig) => {
-    setOptionConfig(newOptionConfig);
-    // if (timerRef.current) clearTimeout(timerRef.current);
-    // timerRef.current = setTimeout(() => {
-    // }, 500);
-  };
-
   const value: AppContextType = {
     imgURL,
     imgFormat,
     optionConfig,
     cutImgsURL,
     setImgURL,
-    setOptionConfig: handleOptionConfigChange,
+    setOptionConfig,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

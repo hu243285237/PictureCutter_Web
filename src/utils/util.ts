@@ -170,6 +170,6 @@ function setWorkerCallback(
     const context = canvas.getContext('bitmaprenderer');
     context?.transferFromImageBitmap(imageBitmap);
     resArr.push(canvas.toDataURL('image/' + format, 1.0));
-    callback && callback(resArr);
+    callback && callback([...resArr]);
   };
 }
