@@ -4,9 +4,10 @@
 
 ## 技术栈
 
-- **构建**: Vite 5
-- **框架**: React 19 + TypeScript
-- **样式**: Tailwind CSS v4
+构建: Vite 7
+框架: React 19 + TypeScript
+样式: Tailwind CSS 4
+组件：AntDesign 6
 
 ## 在线地址
 
@@ -63,10 +64,6 @@ jspdf: 用于输出 PDF 格式
 触发条件: 根据定时任务周期性触发
 
 执行方法: 同步镜像工程到 Gitee 仓库，然后部署 Gitee Pages
-
-# 开始项目
-
-本项目使用 Vite 构建。
 
 ## 使用 npm
 
