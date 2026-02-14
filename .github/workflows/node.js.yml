@@ -31,5 +31,4 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         DEFAULT_BUMP: patch
-      with:
-        tag_prefix: v
+        WITH_V: true
