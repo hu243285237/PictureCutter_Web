@@ -40,9 +40,11 @@ export default function Option() {
               <InputNumber
                 className={inputNumberCls}
                 min={1}
+                step={1}
+                precision={0}
                 value={pixel.width}
                 onChange={(value) => {
-                  const v = value ?? 1;
+                  const v = Math.floor(Number(value) || 1);
                   if (v < 1) return;
                   setOptionConfig({
                     ...optionConfig,
@@ -57,9 +59,11 @@ export default function Option() {
               <InputNumber
                 className={inputNumberCls}
                 min={1}
+                step={1}
+                precision={0}
                 value={pixel.height}
                 onChange={(value) => {
-                  const v = value ?? 1;
+                  const v = Math.floor(Number(value) || 1);
                   if (v < 1) return;
                   setOptionConfig({
                     ...optionConfig,
@@ -88,9 +92,10 @@ export default function Option() {
                 className={inputNumberCls}
                 min={1}
                 step={1}
+                precision={0}
                 value={amount.row}
                 onChange={(value) => {
-                  const v = value ?? 1;
+                  const v = Math.floor(Number(value) || 1);
                   if (v < 1) return;
                   setOptionConfig({
                     ...optionConfig,
@@ -106,9 +111,10 @@ export default function Option() {
                 className={inputNumberCls}
                 min={1}
                 step={1}
+                precision={0}
                 value={amount.col}
                 onChange={(value) => {
-                  const v = value ?? 1;
+                  const v = Math.floor(Number(value) || 1);
                   if (v < 1) return;
                   setOptionConfig({
                     ...optionConfig,
