@@ -2,7 +2,11 @@
 
 body {
   margin: 0;
+  min-height: 100vh;
+  /* 渐变高度固定为 100vh 并纵向重复，body 变高时只多出相同图案，不会重绘导致突变 */
   background: linear-gradient(to bottom, #0a0f1a 0%, #151b2e 50%, #0a0f1a 100%);
+  background-size: 100% 100vh;
+  background-repeat: repeat-y;
   color: #f0f8ff;
   position: relative;
 }
