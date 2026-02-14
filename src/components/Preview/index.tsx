@@ -52,7 +52,7 @@ export default function Preview() {
         <div className="flex flex-row gap-10">
           {/* 静态预览 */}
           <div className="flex flex-col items-center">
-            <li className="flex items-center p-2.5 h-[150px] w-[400px] max-w-full bg-[#f0f8ff] rounded-lg border-2 overflow-x-scroll">
+            <ul className="flex items-center p-2.5 h-[150px] w-[400px] max-w-full bg-[#f0f8ff] rounded-lg border-2 overflow-x-scroll">
               {cutImgsURL.map((item, index) => (
                 <img
                   className="mx-2 max-h-full max-w-full shadow-[2px_2px_6px_2px_rgba(100,100,100,0.5)]"
@@ -62,7 +62,7 @@ export default function Preview() {
                   draggable="false"
                 />
               ))}
-            </li>
+            </ul>
             <p className="mt-4 text-sm text-gray-400">
               静态预览（共切割成 {cutImgsURL.length} 张图片）
             </p>

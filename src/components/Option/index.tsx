@@ -1,6 +1,7 @@
 import { useAppContext } from '../../contexts';
 import { CutMode } from '../../common';
 import Step from '../Step';
+import { InputNumber } from 'antd';
 
 /**
  * 选项
@@ -13,130 +14,151 @@ export default function Option() {
   const frameCls = (mode: CutMode) =>
     `flex-1 ${cutMode === mode ? 'opacity-100' : 'opacity-30'}`;
   const titleCls = (mode: CutMode) =>
-    `cursor-pointer pb-2 text-center hover:text-antiquewhite ${cutMode === mode ? 'border-b-[3px] border-solid border-white' : ''
-    }`;
+    `cursor-pointer mb-4 pb-2 text-center hover:text-[#F5DEB3] border-b-[2px] ${cutMode === mode ? 'border-white' : 'border-transparent'}`;
+
+  const labelCls =
+    'flex items-center justify-center gap-2 whitespace-nowrap flex-nowrap';
+  const inputNumberClass = '';
 
   return (
     <Step step={2} title="选项">
-      <div className="flex w-[600px] max-w-full justify-around gap-4">
+      <div className="flex w-[600px] max-w-full flex-nowrap justify-around gap-4">
         {/* 以像素裁剪 */}
         <div className={frameCls(CutMode.PIXEL)}>
           <p
             className={titleCls(CutMode.PIXEL)}
-            onClick={() => setOptionConfig({ ...optionConfig, cutMode: CutMode.PIXEL })}
+            onClick={() =>
+              setOptionConfig({ ...optionConfig, cutMode: CutMode.PIXEL })
+            }
           >
             以像素裁剪
           </p>
-          <div className="mt-1 w-full space-y-1">
-            <label className="flex items-center justify-center gap-2">
-              <p>宽:</p>
-              <input
-                className="w-[42px]"
-                type="number"
-                defaultValue={pixel.width}
+          <ul className="space-y-2">
+            <label className={labelCls}>
+              <span>宽:</span>
+              <InputNumber
+                className={inputNumberClass}
                 min={1}
-                onChange={(e): void => {
-                  const value = parseFloat(e.target.value);
-                  if (!value || value < 0) return;
-                  setOptionConfig({ ...optionConfig, pixel: { width: value, height: pixel.height } });
+                value={pixel.width}
+                onChange={(value) => {
+                  const v = value ?? 1;
+                  if (v < 1) return;
+                  setOptionConfig({
+                    ...optionConfig,
+                    pixel: { width: v, height: pixel.height },
+                  });
                 }}
               />
             </label>
-            <label className="flex items-center justify-center gap-2">
-              <p>高:</p>
-              <input
-                className="w-[42px]"
-                type="number"
-                defaultValue={pixel.height}
+            <label className={labelCls}>
+              <span>高:</span>
+              <InputNumber
+                className={inputNumberClass}
                 min={1}
-                onChange={(e): void => {
-                  const value = parseFloat(e.target.value);
-                  if (!value || value < 0) return;
-                  setOptionConfig({ ...optionConfig, pixel: { width: pixel.width, height: value } });
+                value={pixel.height}
+                onChange={(value) => {
+                  const v = value ?? 1;
+                  if (v < 1) return;
+                  setOptionConfig({
+                    ...optionConfig,
+                    pixel: { width: pixel.width, height: v },
+                  });
                 }}
               />
             </label>
-          </div>
+          </ul>
         </div>
         {/* 以数量均等裁剪 */}
         <div className={frameCls(CutMode.AMOUNT)}>
           <p
             className={titleCls(CutMode.AMOUNT)}
-            onClick={() => setOptionConfig({ ...optionConfig, cutMode: CutMode.AMOUNT })}
+            onClick={() =>
+              setOptionConfig({ ...optionConfig, cutMode: CutMode.AMOUNT })
+            }
           >
             以数量均等裁剪
           </p>
-          <div className="mt-1 w-full space-y-1">
-            <label className="flex items-center justify-center gap-2">
-              <p>横向切割成几份:</p>
-              <input
-                className="w-[42px]"
-                type="number"
-                defaultValue={amount.row}
+          <ul className="space-y-2">
+            <label className={labelCls}>
+              <span>横向切割成几份:</span>
+              <InputNumber
+                className={inputNumberClass}
                 min={1}
                 step={1}
-                onChange={(e): void => {
-                  const value = parseFloat(e.target.value);
-                  if (!value || value < 0) return;
-                  setOptionConfig({ ...optionConfig, amount: { row: value, col: amount.col } });
+                value={amount.row}
+                onChange={(value) => {
+                  const v = value ?? 1;
+                  if (v < 1) return;
+                  setOptionConfig({
+                    ...optionConfig,
+                    amount: { row: v, col: amount.col },
+                  });
                 }}
               />
             </label>
-            <label className="flex items-center justify-center gap-2">
-              <p>纵向切割成几份:</p>
-              <input
-                className="w-[42px]"
-                type="number"
-                defaultValue={amount.col}
+            <label className={labelCls}>
+              <span>纵向切割成几份:</span>
+              <InputNumber
+                className={inputNumberClass}
                 min={1}
                 step={1}
-                onChange={(e): void => {
-                  const value = parseFloat(e.target.value);
-                  if (!value || value < 0) return;
-                  setOptionConfig({ ...optionConfig, amount: { row: amount.row, col: value } });
+                value={amount.col}
+                onChange={(value) => {
+                  const v = value ?? 1;
+                  if (v < 1) return;
+                  setOptionConfig({
+                    ...optionConfig,
+                    amount: { row: amount.row, col: v },
+                  });
                 }}
               />
             </label>
-          </div>
+          </ul>
         </div>
         {/* 以比例裁剪 */}
         <div className={frameCls(CutMode.SCALE)}>
           <p
             className={titleCls(CutMode.SCALE)}
-            onClick={() => setOptionConfig({ ...optionConfig, cutMode: CutMode.SCALE })}
+            onClick={() =>
+              setOptionConfig({ ...optionConfig, cutMode: CutMode.SCALE })
+            }
           >
             以比例裁剪
           </p>
-          <div className="mt-1 w-full space-y-1">
-            <label className="flex items-center justify-center gap-2">
-              <p>宽:</p>
-              <input
-                className="w-[42px]"
-                type="number"
-                defaultValue={scale.width}
+          <ul className="space-y-2">
+            <label className={labelCls}>
+              <span>宽:</span>
+              <InputNumber
+                className={inputNumberClass}
                 min={0}
-                onChange={(e): void => {
-                  const value = parseFloat(e.target.value);
-                  if (!value || value < 0) return;
-                  setOptionConfig({ ...optionConfig, scale: { width: value, height: scale.height } });
+                value={scale.width}
+                onChange={(value) => {
+                  const v = value ?? 0;
+                  if (v < 0) return;
+                  setOptionConfig({
+                    ...optionConfig,
+                    scale: { width: v, height: scale.height },
+                  });
                 }}
               />
             </label>
-            <label className="flex items-center justify-center gap-2">
-              <p>高:</p>
-              <input
-                className="w-[42px]"
-                type="number"
-                defaultValue={scale.height}
+            <label className={labelCls}>
+              <span>高:</span>
+              <InputNumber
+                className={inputNumberClass}
                 min={0}
-                onChange={(e): void => {
-                  const value = parseFloat(e.target.value);
-                  if (!value || value < 0) return;
-                  setOptionConfig({ ...optionConfig, scale: { width: scale.width, height: value } });
+                value={scale.height}
+                onChange={(value) => {
+                  const v = value ?? 0;
+                  if (v < 0) return;
+                  setOptionConfig({
+                    ...optionConfig,
+                    scale: { width: scale.width, height: v },
+                  });
                 }}
               />
             </label>
-          </div>
+          </ul>
         </div>
       </div>
     </Step>

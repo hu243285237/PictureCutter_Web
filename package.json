@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "antd": "^6.3.0",
     "file-saver": "^2.0.5",
     "jspdf": "^2.5.1",
     "jszip": "^3.10.1",
