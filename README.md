@@ -77,13 +77,3 @@ jspdf: 用于输出 PDF 格式
 打包: `npm run build`
 
 预览打包结果: `npm run preview`
-
-## 使用 yarn
-
-安装依赖包: `yarn`
-
-本地开发: `yarn dev`
-
-打包: `yarn build`
-
-预览打包结果: `yarn preview`
