@@ -1,7 +1,7 @@
+import { InputNumber } from 'antd';
 import { useAppContext } from '../../contexts';
 import { CutMode } from '../../common';
 import Step from '../Step';
-import { InputNumber } from 'antd';
 
 /**
  * 选项
@@ -18,11 +18,12 @@ export default function Option() {
 
   const labelCls =
     'flex items-center justify-center gap-2 whitespace-nowrap flex-nowrap';
-  const inputNumberClass = '';
+  const ulCls = 'space-y-2';
+  const inputNumberCls = 'w-[78px]!';
 
   return (
     <Step step={2} title="选项">
-      <div className="flex w-[600px] max-w-full flex-nowrap justify-around gap-4">
+      <div className="flex gap-12">
         {/* 以像素裁剪 */}
         <div className={frameCls(CutMode.PIXEL)}>
           <p
@@ -33,11 +34,11 @@ export default function Option() {
           >
             以像素裁剪
           </p>
-          <ul className="space-y-2">
+          <ul className={ulCls}>
             <label className={labelCls}>
-              <span>宽:</span>
+              <span>宽</span>
               <InputNumber
-                className={inputNumberClass}
+                className={inputNumberCls}
                 min={1}
                 value={pixel.width}
                 onChange={(value) => {
@@ -49,11 +50,12 @@ export default function Option() {
                   });
                 }}
               />
+              <span>px</span>
             </label>
             <label className={labelCls}>
-              <span>高:</span>
+              <span>高</span>
               <InputNumber
-                className={inputNumberClass}
+                className={inputNumberCls}
                 min={1}
                 value={pixel.height}
                 onChange={(value) => {
@@ -65,6 +67,7 @@ export default function Option() {
                   });
                 }}
               />
+              <span>px</span>
             </label>
           </ul>
         </div>
@@ -78,11 +81,11 @@ export default function Option() {
           >
             以数量均等裁剪
           </p>
-          <ul className="space-y-2">
+          <ul className={ulCls}>
             <label className={labelCls}>
-              <span>横向切割成几份:</span>
+              <span>横向切割成</span>
               <InputNumber
-                className={inputNumberClass}
+                className={inputNumberCls}
                 min={1}
                 step={1}
                 value={amount.row}
@@ -95,11 +98,12 @@ export default function Option() {
                   });
                 }}
               />
+              <span>份</span>
             </label>
             <label className={labelCls}>
-              <span>纵向切割成几份:</span>
+              <span>纵向切割成</span>
               <InputNumber
-                className={inputNumberClass}
+                className={inputNumberCls}
                 min={1}
                 step={1}
                 value={amount.col}
@@ -112,6 +116,7 @@ export default function Option() {
                   });
                 }}
               />
+              <span>份</span>
             </label>
           </ul>
         </div>
@@ -125,38 +130,40 @@ export default function Option() {
           >
             以比例裁剪
           </p>
-          <ul className="space-y-2">
+          <ul className={ulCls}>
             <label className={labelCls}>
-              <span>宽:</span>
+              <span>宽</span>
               <InputNumber
-                className={inputNumberClass}
-                min={0}
+                className={inputNumberCls}
+                min={1}
                 value={scale.width}
                 onChange={(value) => {
-                  const v = value ?? 0;
-                  if (v < 0) return;
+                  const v = value ?? 1;
+                  if (v < 1) return;
                   setOptionConfig({
                     ...optionConfig,
                     scale: { width: v, height: scale.height },
                   });
                 }}
               />
+              <span>倍</span>
             </label>
             <label className={labelCls}>
-              <span>高:</span>
+              <span>高</span>
               <InputNumber
-                className={inputNumberClass}
-                min={0}
+                className={inputNumberCls}
+                min={1}
                 value={scale.height}
                 onChange={(value) => {
-                  const v = value ?? 0;
-                  if (v < 0) return;
+                  const v = value ?? 1;
+                  if (v < 1) return;
                   setOptionConfig({
                     ...optionConfig,
                     scale: { width: scale.width, height: v },
                   });
                 }}
               />
+              <span>倍</span>
             </label>
           </ul>
         </div>
