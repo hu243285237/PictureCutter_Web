@@ -1,55 +1,49 @@
 name: Gitee repos mirror periodic job
 
 on:
-  # 如果需要 PR 触发把 push 前的#去掉
-  # push:
-  # 手动事件，如果需要手动触发把 workflow_dispatch 前的#去掉
+  # 打 tag 时触发，与 Node.js CI 一致：先构建部署到 GitHub Pages，再同步到 Gitee
+  push:
+    tags:
+      - '*'
+  # 如需手动触发可取消下行注释
   # workflow_dispatch:
-  # 计划事件
-  schedule:
-    # 北京时间早上八点每天执行一次
-    - cron: '0 0 * * *'
-    
-jobs:
 
+jobs:
   build:
-  
     runs-on: ubuntu-latest
-    
+
     steps:
-    
-    - name: Mirror the Github organization repos to Gitee.
-      uses: Yikun/gitee-mirror-action@v0.10
-      with:
-        # 必选，需要同步的Github用户（源）
-        src: github/hu243285237
-        # 必选，需要同步到的Gitee的用户（目的）
-        dst: gitee/hu243285237
-        # 必选，Gitee公钥对应的私钥，https://gitee.com/profile/sshkeys
-        dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
-        # 必选，Gitee对应的用于创建仓库的token，https://gitee.com/profile/personal_access_tokens
-        dst_token:  ${{ secrets.GITEE_TOKEN }}
-        # 如果是组织，指定组织即可，默认为用户user
-        # account_type: org
-        # 还有黑、白名单，静态名单机制，可以用于更新某些指定库
-        static_list: "PictureCutter_Web"
-        # black_list: "repo_name,repo_name2"
-        # white_list: "PictureCutter_Web"
-        
-    - name: Gitee Pages Action
-      # You may pin to the exact commit or the version.
-      uses: yanglbme/gitee-pages-action@v1.4.1
-      with:
-        # The Gitee username, like yanglbme
-        gitee-username: hu243285237
-        # The Gitee password
-        gitee-password: ${{ secrets.GITEE_PASSWORD }}
-        # The Gitee repository, like doocs/leetcode
-        gitee-repo: hu243285237/PictureCutter_Web
-        # Which branch to build
-        branch: gh-pages
-        # Which directory to build
-        # directory: # optional, default is 
-        # Use force https or not
-        # https: # optional, default is true
-        
+      - name: Mirror the Github organization repos to Gitee.
+        uses: Yikun/gitee-mirror-action@v0.10
+        with:
+          # 必选，需要同步的Github用户（源）
+          src: github/hu243285237
+          # 必选，需要同步到的Gitee的用户（目的）
+          dst: gitee/hu243285237
+          # 必选，Gitee公钥对应的私钥，https://gitee.com/profile/sshkeys
+          dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
+          # 必选，Gitee对应的用于创建仓库的token，https://gitee.com/profile/personal_access_tokens
+          dst_token: ${{ secrets.GITEE_TOKEN }}
+          # 如果是组织，指定组织即可，默认为用户user
+          # account_type: org
+          # 还有黑、白名单，静态名单机制，可以用于更新某些指定库
+          static_list: 'PictureCutter_Web'
+          # black_list: "repo_name,repo_name2"
+          # white_list: "PictureCutter_Web"
+
+      - name: Gitee Pages Action
+        # You may pin to the exact commit or the version.
+        uses: yanglbme/gitee-pages-action@v1.4.1
+        with:
+          # The Gitee username, like yanglbme
+          gitee-username: hu243285237
+          # The Gitee password
+          gitee-password: ${{ secrets.GITEE_PASSWORD }}
+          # The Gitee repository, like doocs/leetcode
+          gitee-repo: hu243285237/PictureCutter_Web
+          # Which branch to build
+          branch: gh-pages
+          # Which directory to build
+          # directory: # optional, default is
+          # Use force https or not
+          # https: # optional, default is true
