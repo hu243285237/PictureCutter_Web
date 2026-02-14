@@ -1,13 +1,12 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+# 本地打 tag 后推送，CI 在收到 tag 时触发：构建并部署到 GitHub Pages
+# 使用方式：git tag v1.0.0 && git push origin v1.0.0
 
 name: Node.js CI
 
 on:
   push:
-    branches: ['master']
-  pull_request:
-    branches: ['master']
+    tags:
+      - '*'
 
 jobs:
   build:
@@ -24,10 +23,3 @@ jobs:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BRANCH: gh-pages
           FOLDER: dist
-
-      - name: Create Tag
-        uses: butlerlogic/action-autotag@1.1.2
-        env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-        with:
-          tag_prefix: 'v'
