@@ -17,18 +17,19 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - run: npm install
-    - run: CI="" npm run build
+    - run: npm run build
     
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         BRANCH: gh-pages
-        FOLDER: build
+        FOLDER: dist
         
     - name: Create Tag
-      uses: butlerlogic/action-autotag@stable
+      uses: anothrNick/github-tag-action@1.64.0
       env:
-        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        DEFAULT_BUMP: patch
       with:
-        tag_prefix: "v"
+        tag_prefix: v

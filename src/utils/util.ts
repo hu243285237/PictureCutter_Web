@@ -1,8 +1,9 @@
-import { CutMode } from './enum';
-import cutWorker from './worker';
+import { message } from 'antd';
 import { saveAs } from 'file-saver';
 import JSZip from 'jszip';
 import jsPDF from 'jspdf';
+import { CutMode } from '../common';
+import cutWorker from './worker';
 
 /**
  * 以像素裁剪图片
@@ -18,7 +19,7 @@ export function pixelCut(
   pixelWidth: number,
   pixelHeight: number,
   format: string,
-  callback: Function
+  callback: Function,
 ) {
   const res = new Array<string>();
   const img = new Image();
@@ -26,15 +27,20 @@ export function pixelCut(
   const amountRow = Math.ceil(img.width / pixelWidth);
   const amountCol = Math.ceil(img.height / pixelHeight);
   cutWorker.reset(CutMode.PIXEL);
-  createImageBitmap(img).then((imgSource) => {
-    cutWorker.worker.postMessage({
-      imgSource,
-      pixelWidth,
-      pixelHeight,
-      amountRow,
-      amountCol,
+  createImageBitmap(img)
+    .then((imgSource) => {
+      cutWorker.worker.postMessage({
+        imgSource,
+        pixelWidth,
+        pixelHeight,
+        amountRow,
+        amountCol,
+      });
+    })
+    .catch(() => {
+      alert('图片处理失败，请重试或更换图片');
+      callback([]);
     });
-  });
   setWorkerCallback(res, format, callback);
 }
 
@@ -52,7 +58,7 @@ export function amountCut(
   amountRow: number,
   amountCol: number,
   format: string,
-  callback: Function
+  callback: Function,
 ) {
   const res = new Array<string>();
   const img = new Image();
@@ -60,15 +66,20 @@ export function amountCut(
   const pixelWidth = img.width / amountRow;
   const pixelHeight = img.height / amountCol;
   cutWorker.reset(CutMode.AMOUNT);
-  createImageBitmap(img).then((imgSource) => {
-    cutWorker.worker.postMessage({
-      imgSource,
-      pixelWidth,
-      pixelHeight,
-      amountRow,
-      amountCol,
+  createImageBitmap(img)
+    .then((imgSource) => {
+      cutWorker.worker.postMessage({
+        imgSource,
+        pixelWidth,
+        pixelHeight,
+        amountRow,
+        amountCol,
+      });
+    })
+    .catch(() => {
+      alert('图片处理失败，请重试或更换图片');
+      callback([]);
     });
-  });
   setWorkerCallback(res, format, callback);
 }
 
@@ -86,19 +97,24 @@ export function scaleCut(
   scaleWidth: number,
   scaleHeight: number,
   format: string,
-  callback: Function
+  callback: Function,
 ) {
   const res = new Array<string>();
   const img = new Image();
   img.src = imgURL;
   cutWorker.reset(CutMode.SCALE);
-  createImageBitmap(img).then((imgSource) => {
-    cutWorker.worker.postMessage({
-      imgSource,
-      scaleWidth,
-      scaleHeight,
+  createImageBitmap(img)
+    .then((imgSource) => {
+      cutWorker.worker.postMessage({
+        imgSource,
+        scaleWidth,
+        scaleHeight,
+      });
+    })
+    .catch(() => {
+      alert('图片处理失败，请重试或更换图片');
+      callback([]);
     });
-  });
   setWorkerCallback(res, format, callback);
 }
 
@@ -145,7 +161,7 @@ export function exportImgs(imgsURL: Array<string>, format: string): void {
 function setWorkerCallback(
   resArr: string[],
   format: string,
-  callback: Function
+  callback: Function,
 ) {
   cutWorker.worker.onmessage = (e: MessageEvent) => {
     if (!e.data) return;
@@ -155,6 +171,9 @@ function setWorkerCallback(
     const context = canvas.getContext('bitmaprenderer');
     context?.transferFromImageBitmap(imageBitmap);
     resArr.push(canvas.toDataURL('image/' + format, 1.0));
-    callback && callback(resArr);
+    callback && callback([...resArr]);
+  };
+  cutWorker.worker.onerror = () => {
+    message.error('图片处理失败，请检查图片或参数');
   };
 }

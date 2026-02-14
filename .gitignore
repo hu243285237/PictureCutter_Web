@@ -7,9 +7,26 @@
 /dist
 /build
 
+# local env
+.env
+.env.*
+!.env.example
+
+# build
+*.tsbuildinfo
+.vite
+
+# logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 
-yarn.lock
-package-lock.json
+# editor
+.idea
+.vscode/*
+!.vscode/extensions.json
+
+# OS
+.DS_Store
+Thumbs.db

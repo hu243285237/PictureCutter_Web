@@ -1,208 +1,178 @@
-import { useEffect, useState } from 'react';
-import { CutMode } from '../../utils/enum';
-import { OptionProps } from '../../utils/interface';
-import './index.scss';
+import { InputNumber } from 'antd';
+import { useAppContext } from '../../contexts';
+import { CutMode } from '../../common';
+import Step from '../Step';
 
-interface Props {
-  defaultOption: OptionProps;
-  onOptionChange: Function;
-}
+/**
+ * 选项
+ */
+export default function Option() {
+  const { imgWidth, imgHeight, optionConfig, setOptionConfig } =
+    useAppContext();
 
-export default function (props: Props) {
-  const { defaultOption, onOptionChange } = props;
+  const { cutMode, pixel, amount, scale } = optionConfig;
 
-  const [cutMode, setCutMode] = useState<CutMode>(defaultOption.cutMode);
-  const [pixel, setPixel] = useState<{ width: number; height: number }>(
-    defaultOption.pixel
-  );
-  const [amount, setAmount] = useState<{ row: number; col: number }>(
-    defaultOption.amount
-  );
-  const [scale, setScale] = useState<{ width: number; height: number }>(
-    defaultOption.scale
-  );
+  const frameCls = (mode: CutMode) =>
+    `flex-1 ${cutMode === mode ? 'opacity-100' : 'opacity-30'}`;
+  const titleCls = (mode: CutMode) =>
+    `cursor-pointer mb-4 pb-2 text-center hover:text-amber-100 border-b-[2px] ${cutMode === mode ? 'border-white' : 'border-transparent'}`;
 
-  useEffect(() => {
-    onOptionChange({
-      cutMode,
-      pixel,
-      amount,
-      scale,
-    });
-  }, [cutMode, pixel, amount, scale]);
+  const labelCls =
+    'flex items-center justify-center gap-2 whitespace-nowrap flex-nowrap';
+  const ulCls = 'space-y-2';
+  const inputNumberCls = 'w-[78px]!';
 
   return (
-    <div className="option-container">
-      <h2>STEP 2: 选项</h2>
-      <div className="frame">
+    <Step step={2} title="选项">
+      <div className="flex gap-12">
         {/* 以像素裁剪 */}
-        <div
-          className={[
-            'frame-content',
-            cutMode === CutMode.PIXEL && 'frame-content-checked',
-          ].join(' ')}
-        >
+        <div className={frameCls(CutMode.PIXEL)}>
           <p
-            className={[
-              'frame-content-title',
-              cutMode === CutMode.PIXEL && 'frame-content-title-checked',
-            ].join(' ')}
-            onClick={() => {
-              setCutMode(CutMode.PIXEL);
-            }}
+            className={titleCls(CutMode.PIXEL)}
+            onClick={() =>
+              setOptionConfig({ ...optionConfig, cutMode: CutMode.PIXEL })
+            }
           >
             以像素裁剪
           </p>
-          <div className="frame-content-list">
-            <label className="frame-content-list-item">
-              <p>宽:</p>
-              <input
-                className="frame-content-list-item-input"
-                type="number"
-                defaultValue={pixel.width}
+          <ul className={ulCls}>
+            <label className={labelCls}>
+              <span>宽</span>
+              <InputNumber
+                className={inputNumberCls}
                 min={1}
-                onChange={(e): void => {
-                  const value = parseFloat(e.target.value);
-                  if (!value || value < 0) return;
-                  setPixel({
-                    width: value,
-                    height: pixel.height,
+                max={imgWidth}
+                step={1}
+                precision={0}
+                value={pixel.width}
+                onChange={(value) => {
+                  if (value === null) return;
+                  setOptionConfig({
+                    ...optionConfig,
+                    pixel: { width: value, height: pixel.height },
                   });
                 }}
-              ></input>
+              />
+              <span>px</span>
             </label>
-            <label className="frame-content-list-item">
-              <p>高:</p>
-              <input
-                className="frame-content-list-item-input"
-                type="number"
-                defaultValue={pixel.height}
+            <label className={labelCls}>
+              <span>高</span>
+              <InputNumber
+                className={inputNumberCls}
                 min={1}
-                onChange={(e): void => {
-                  const value = parseFloat(e.target.value);
-                  if (!value || value < 0) return;
-                  setPixel({
-                    width: pixel.width,
-                    height: value,
+                max={imgHeight}
+                step={1}
+                precision={0}
+                value={pixel.height}
+                onChange={(value) => {
+                  if (value === null) return;
+                  setOptionConfig({
+                    ...optionConfig,
+                    pixel: { width: pixel.width, height: value },
                   });
                 }}
-              ></input>
+              />
+              <span>px</span>
             </label>
-          </div>
+          </ul>
         </div>
-        {/* 以数量裁剪 */}
-        <div
-          className={[
-            'frame-content',
-            cutMode === CutMode.AMOUNT && 'frame-content-checked',
-          ].join(' ')}
-        >
+        {/* 以数量均等裁剪 */}
+        <div className={frameCls(CutMode.AMOUNT)}>
           <p
-            className={[
-              'frame-content-title',
-              cutMode === CutMode.AMOUNT && 'frame-content-title-checked',
-            ].join(' ')}
-            onClick={() => {
-              setCutMode(CutMode.AMOUNT);
-            }}
+            className={titleCls(CutMode.AMOUNT)}
+            onClick={() =>
+              setOptionConfig({ ...optionConfig, cutMode: CutMode.AMOUNT })
+            }
           >
             以数量均等裁剪
           </p>
-          <div className="frame-content-list">
-            <label className="frame-content-list-item">
-              <p>横向切割成几份:</p>
-              <input
-                className="frame-content-list-item-input"
-                type="number"
-                defaultValue={amount.row}
+          <ul className={ulCls}>
+            <label className={labelCls}>
+              <span>横向切割成</span>
+              <InputNumber
+                className={inputNumberCls}
                 min={1}
+                max={imgWidth}
                 step={1}
-                onChange={(e): void => {
-                  const value = parseFloat(e.target.value);
-                  if (!value || value < 0) return;
-                  setAmount({
-                    row: value,
-                    col: amount.col,
+                precision={0}
+                value={amount.row}
+                onChange={(value) => {
+                  if (value === null) return;
+                  setOptionConfig({
+                    ...optionConfig,
+                    amount: { row: value, col: amount.col },
                   });
                 }}
-              ></input>
+              />
+              <span>份</span>
             </label>
-            <label className="frame-content-list-item">
-              <p>纵向切割成几份:</p>
-              <input
-                className="frame-content-list-item-input"
-                type="number"
-                defaultValue={amount.col}
+            <label className={labelCls}>
+              <span>纵向切割成</span>
+              <InputNumber
+                className={inputNumberCls}
                 min={1}
+                max={imgHeight}
                 step={1}
-                onChange={(e): void => {
-                  const value = parseFloat(e.target.value);
-                  if (!value || value < 0) return;
-                  setAmount({
-                    row: amount.row,
-                    col: value,
+                precision={0}
+                value={amount.col}
+                onChange={(value) => {
+                  if (value === null) return;
+                  setOptionConfig({
+                    ...optionConfig,
+                    amount: { row: amount.row, col: value },
                   });
                 }}
-              ></input>
+              />
+              <span>份</span>
             </label>
-          </div>
+          </ul>
         </div>
         {/* 以比例裁剪 */}
-        <div
-          className={[
-            'frame-content',
-            cutMode === CutMode.SCALE && 'frame-content-checked',
-          ].join(' ')}
-        >
+        <div className={frameCls(CutMode.SCALE)}>
           <p
-            className={[
-              'frame-content-title',
-              cutMode === CutMode.SCALE && 'frame-content-title-checked',
-            ].join(' ')}
-            onClick={() => {
-              setCutMode(CutMode.SCALE);
-            }}
+            className={titleCls(CutMode.SCALE)}
+            onClick={() =>
+              setOptionConfig({ ...optionConfig, cutMode: CutMode.SCALE })
+            }
           >
             以比例裁剪
           </p>
-          <div className="frame-content-list">
-            <label className="frame-content-list-item">
-              <p>宽:</p>
-              <input
-                className="frame-content-list-item-input"
-                type="number"
-                defaultValue={scale.width}
-                min={0}
-                onChange={(e): void => {
-                  const value = parseFloat(e.target.value);
-                  if (!value || value < 0) return;
-                  setScale({
-                    width: value,
-                    height: scale.height,
+          <ul className={ulCls}>
+            <label className={labelCls}>
+              <span>宽</span>
+              <InputNumber
+                className={inputNumberCls}
+                min={1}
+                value={scale.width}
+                onChange={(value) => {
+                  if (value === null) return;
+                  setOptionConfig({
+                    ...optionConfig,
+                    scale: { width: value, height: scale.height },
                   });
                 }}
-              ></input>
+              />
+              <span>倍</span>
             </label>
-            <label className="frame-content-list-item">
-              <p>高:</p>
-              <input
-                className="frame-content-list-item-input"
-                type="number"
-                defaultValue={scale.height}
-                min={0}
-                onChange={(e): void => {
-                  const value = parseFloat(e.target.value);
-                  if (!value || value < 0) return;
-                  setScale({
-                    width: scale.width,
-                    height: value,
+            <label className={labelCls}>
+              <span>高</span>
+              <InputNumber
+                className={inputNumberCls}
+                min={1}
+                value={scale.height}
+                onChange={(value) => {
+                  if (value === null) return;
+                  setOptionConfig({
+                    ...optionConfig,
+                    scale: { width: scale.width, height: value },
                   });
                 }}
-              ></input>
+              />
+              <span>倍</span>
             </label>
-          </div>
+          </ul>
         </div>
       </div>
-    </div>
+    </Step>
   );
 }

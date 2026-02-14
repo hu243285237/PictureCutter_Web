@@ -1,68 +1,97 @@
-import { useEffect, useState } from 'react';
-import './index.scss';
+import { useEffect, useState, useRef } from 'react';
+import { useAppContext } from '../../contexts';
+import Step from '../Step';
 
-interface Props {
-  cuttedImgsURL: Array<string>;
-}
-
-export default function (props: Props) {
-  const { cuttedImgsURL } = props;
+/**
+ * 预览
+ */
+export default function Preview() {
+  const { cutImgsURL } = useAppContext();
   const [animateIndex, setAnimateIndex] = useState<number>(0);
-  const [speed, setSpeed] = useState<number>(5);
-
-  let timer: NodeJS.Timer;
+  const [speed, setSpeed] = useState<number>(1);
+  const prevCutImgsURLRef = useRef<string>('');
 
   useEffect(() => {
-    clearInterval(timer);
-    timer = setInterval(() => {
-      if (animateIndex >= cuttedImgsURL.length - 1) {
-        setAnimateIndex(0);
-      } else {
-        setAnimateIndex(() => animateIndex + 1);
-      }
-    }, (11 - speed) * 20);
-    return () => {
-      clearInterval(timer);
-    };
-  }, [cuttedImgsURL, animateIndex, speed]);
+    const currentKey =
+      cutImgsURL.length > 0 ? cutImgsURL[0] + cutImgsURL.length : '';
+    if (prevCutImgsURLRef.current !== currentKey) {
+      prevCutImgsURLRef.current = currentKey;
+      setAnimateIndex(0);
+    }
+  }, [cutImgsURL]);
 
-  // 处理速度更改时
-  const handleSpeedChange = (event: any): void => {
-    setSpeed(event.target.value);
+  useEffect(() => {
+    if (cutImgsURL.length === 0) return;
+
+    const timer = setInterval(
+      () => {
+        setAnimateIndex((prevIndex) => {
+          if (prevIndex >= cutImgsURL.length - 1) {
+            return 0;
+          } else {
+            return prevIndex + 1;
+          }
+        });
+      },
+      (11 - speed) * 20,
+    );
+
+    return () => clearInterval(timer);
+  }, [cutImgsURL.length, speed]);
+
+  const handleSpeedChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ): void => {
+    const v = Number(event.target.value);
+    if (!Number.isNaN(v)) setSpeed(v);
   };
 
   return (
-    <div className="preview-container">
-      <h2>STEP 3: 预览</h2>
-      {cuttedImgsURL.length ? (
-        <>
-          <p>静态预览（共切割成 {cuttedImgsURL.length} 张图片）</p>
-          <div className="list">
-            {cuttedImgsURL.map((item, index) => {
-              return (
+    <Step step={3} title="预览">
+      {cutImgsURL.length > 0 && (
+        <div className="flex flex-row gap-10">
+          {/* 静态预览 */}
+          <div className="flex flex-col items-center">
+            <ul className="flex items-center p-2.5 h-[150px] w-[400px] max-w-full bg-[#f0f8ff] rounded-lg border-2 overflow-x-scroll">
+              {cutImgsURL.map((item, index) => (
                 <img
-                  className="list-item"
+                  className="mx-2 max-h-full max-w-full shadow-[2px_2px_6px_2px_rgba(100,100,100,0.5)]"
                   key={index}
                   src={item}
                   alt=""
                   draggable="false"
-                ></img>
-              );
-            })}
+                />
+              ))}
+            </ul>
+            <p className="mt-4 text-sm text-gray-400">
+              静态预览（共切割成 {cutImgsURL.length} 张图片）
+            </p>
           </div>
-          <div className="animate">
-            <p>动态预览（按序列播放）</p>
-            <div className="animate-frame">
+          {/* 动态预览 */}
+          <div className="flex flex-col items-center">
+            <div className="flex justify-center items-center p-2.5 h-[150px] w-[150px] rounded-lg border-2 bg-[#f0f8ff]">
               <img
-                className="animate-frame-img"
-                src={cuttedImgsURL[animateIndex]}
+                className="max-h-full max-w-full shadow-[2px_2px_6px_2px_rgba(100,100,100,0.5)]"
+                src={cutImgsURL[animateIndex]}
                 alt=""
                 draggable="false"
-              ></img>
+              />
             </div>
+            <p className="mt-4 text-sm text-gray-400">动态预览</p>
+            {/* <div className="flex items-center gap-2 mt-4 text-sm">
+              <span>速度</span>
+              <input
+                type="range"
+                min={1}
+                max={10}
+                value={speed}
+                onChange={handleSpeedChange}
+                className="w-24 accent-white"
+              />
+            </div> */}
           </div>
-        </>
-      ) : null}
-    </div>
+        </div>
+      )}
+    </Step>
   );
 }

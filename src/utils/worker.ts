@@ -1,4 +1,4 @@
-import { CutMode } from './enum';
+import { CutMode } from '../common/enums';
 
 export default (function () {
   // 以像素裁剪和以数量裁剪的代码
@@ -11,7 +11,7 @@ export default (function () {
         for (let j = 0; j < amountRow; j++) {
           const offscreenCanvas = new OffscreenCanvas(pixelWidth, pixelHeight);
           const ctx = offscreenCanvas.getContext(
-            '2d'
+            '2d',
           ) as OffscreenCanvasRenderingContext2D;
           ctx.drawImage(
             imgSource,
@@ -22,7 +22,7 @@ export default (function () {
             0,
             0,
             pixelWidth,
-            pixelHeight
+            pixelHeight,
           );
           const imageBitmap = offscreenCanvas.transferToImageBitmap();
           postMessage(imageBitmap);
@@ -62,7 +62,7 @@ export default (function () {
             drawLength,
           ];
           const ctx = offscreenCanvas.getContext(
-            '2d'
+            '2d',
           ) as OffscreenCanvasRenderingContext2D;
           ctx?.drawImage(
             imgSource,
@@ -73,7 +73,7 @@ export default (function () {
             0,
             0,
             imgSource.width,
-            drawLength
+            drawLength,
           );
         } else {
           let drawLength;
@@ -87,7 +87,7 @@ export default (function () {
             imgSource.height,
           ];
           const ctx = offscreenCanvas.getContext(
-            '2d'
+            '2d',
           ) as OffscreenCanvasRenderingContext2D;
           ctx?.drawImage(
             imgSource,
@@ -98,7 +98,7 @@ export default (function () {
             0,
             0,
             drawLength,
-            imgSource.height
+            imgSource.height,
           );
         }
         const imageBitmap = offscreenCanvas.transferToImageBitmap();
@@ -125,7 +125,7 @@ export default (function () {
       this.worker.terminate();
       this.worker = new Worker(this.getCodeStr(cutMode));
     }
-    private getCodeStr(cutMode: CutMode) {
+    getCodeStr(cutMode: CutMode) {
       let str = '';
       switch (cutMode) {
         case CutMode.PIXEL:

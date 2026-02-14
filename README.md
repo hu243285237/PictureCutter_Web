@@ -1,6 +1,12 @@
 # 项目介绍
 
-一个可将图片自动分段裁剪成多张图片的工具
+一个可将图片分段裁剪成多张图片的工具。
+
+## 技术栈
+
+- **构建**: Vite 5
+- **框架**: React 19 + TypeScript
+- **样式**: Tailwind CSS v4
 
 ## 在线地址
 
@@ -48,7 +54,7 @@ jspdf: 用于输出 PDF 格式
 
 触发条件: 当 master 检测到 push 或 pull_request 时
 
-执行方法: 在 node.js 环境 build 打包，并将打包后的文件部署到 gh-pages 分支，然后根据 package.json 的 version 字段自动创建 tag
+执行方法: 在 node.js 环境 build 打包（输出到 dist 目录），并将打包后的文件部署到 gh-pages 分支，然后根据 package.json 的 version 字段自动创建 tag
 
 ### sync-gitee.yml
 
@@ -60,18 +66,14 @@ jspdf: 用于输出 PDF 格式
 
 # 开始项目
 
+本项目使用 Vite 构建。
+
 ## 使用 npm
 
 安装依赖包: `npm install`
 
-本地运行: `npm start`
+本地开发: `npm run dev`
 
 打包: `npm run build`
 
-## 使用 yarn
-
-安装依赖包: `yarn`
-
-本地运行: `yarn start`
-
-打包: `yarn build`
+预览打包结果: `npm run preview`
