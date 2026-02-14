@@ -14,7 +14,7 @@ export default function Option() {
   const frameCls = (mode: CutMode) =>
     `flex-1 ${cutMode === mode ? 'opacity-100' : 'opacity-30'}`;
   const titleCls = (mode: CutMode) =>
-    `cursor-pointer mb-4 pb-2 text-center hover:text-[#F5DEB3] border-b-[2px] ${cutMode === mode ? 'border-white' : 'border-transparent'}`;
+    `cursor-pointer mb-4 pb-2 text-center hover:text-amber-100 border-b-[2px] ${cutMode === mode ? 'border-white' : 'border-transparent'}`;
 
   const labelCls =
     'flex items-center justify-center gap-2 whitespace-nowrap flex-nowrap';

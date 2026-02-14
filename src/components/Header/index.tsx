@@ -3,7 +3,7 @@ import logo from '../../logo.svg';
 import './index.css';
 
 const navLinkClass =
-  'cursor-pointer border-b border-white hover:text-[#F5DEB3]';
+  'cursor-pointer border-b border-white hover:text-amber-100';
 
 const navItems = [
   {
