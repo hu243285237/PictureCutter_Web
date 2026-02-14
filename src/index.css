@@ -21,3 +21,19 @@ body::after {
         radial-gradient(circle at 40% 20%, rgba(236, 72, 153, 0.05) 0%, transparent 50%);
     pointer-events: none;
 }
+
+/* 预览区速度 Slider：滑动条背景与轨道颜色 */
+.preview-speed-slider .ant-slider-rail {
+    background-color: #e2e8f0 !important;
+}
+.preview-speed-slider .ant-slider-track {
+    background-color: #64748b !important;
+}
+.preview-speed-slider .ant-slider-handle::after {
+    border-color: #64748b !important;
+    box-shadow: 0 0 0 2px rgba(100, 116, 139, 0.2) !important;
+}
+.preview-speed-slider .ant-slider-handle:hover::after,
+.preview-speed-slider .ant-slider-handle:focus::after {
+    border-color: #475569 !important;
+}

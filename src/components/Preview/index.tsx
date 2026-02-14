@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { Slider } from 'antd';
 import { useAppContext } from '../../contexts';
 import Step from '../Step';
 
@@ -8,7 +9,7 @@ import Step from '../Step';
 export default function Preview() {
   const { cutImgsURL } = useAppContext();
   const [animateIndex, setAnimateIndex] = useState<number>(0);
-  const [speed, setSpeed] = useState<number>(1);
+  const [frameRate, setFrameRate] = useState<number>(10);
   const prevCutImgsURLRef = useRef<string>('');
 
   useEffect(() => {
@@ -20,33 +21,30 @@ export default function Preview() {
   }, [cutImgsURL]);
 
   useEffect(() => {
-    if (cutImgsURL.length === 0) return;
+    if (cutImgsURL.length === 0 || frameRate <= 0) return;
 
-    const timer = setInterval(
-      () => {
-        setAnimateIndex((prevIndex) => {
-          if (prevIndex >= cutImgsURL.length - 1) {
-            return 0;
-          } else {
-            return prevIndex + 1;
-          }
-        });
-      },
-      (11 - speed) * 20
-    );
+    const intervalMs = 1000 / frameRate;
+    const timer = setInterval(() => {
+      setAnimateIndex((prevIndex) => {
+        if (prevIndex >= cutImgsURL.length - 1) {
+          return 0;
+        } else {
+          return prevIndex + 1;
+        }
+      });
+    }, intervalMs);
 
     return () => clearInterval(timer);
-  }, [cutImgsURL.length, speed]);
+  }, [cutImgsURL.length, frameRate]);
 
-  const handleSpeedChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    const v = Number(event.target.value);
-    if (!Number.isNaN(v)) setSpeed(v);
+  const handleFrameRateChange = (value: number): void => {
+    if (!Number.isNaN(value)) setFrameRate(value);
   };
 
   return (
     <Step step={3} title="预览">
       {cutImgsURL.length > 0 && (
-        <div className="flex flex-row gap-10">
+        <div className="flex flex-col gap-12">
           {/* 静态预览 */}
           <div className="flex flex-col items-center">
             <ul className="flex items-center p-2.5 h-[150px] w-[400px] max-w-full bg-[#f0f8ff] rounded-lg border-2 overflow-x-scroll">
@@ -66,7 +64,7 @@ export default function Preview() {
           </div>
           {/* 动态预览 */}
           <div className="flex flex-col items-center">
-            <div className="flex justify-center items-center p-2.5 h-[150px] w-[150px] rounded-lg border-2 bg-[#f0f8ff]">
+            <div className="flex flex-col justify-center items-center p-2.5 h-[150px] w-[200px] rounded-lg border-2 bg-[#f0f8ff]">
               <img
                 className="max-h-full max-w-full shadow-[2px_2px_6px_2px_rgba(100,100,100,0.5)]"
                 src={cutImgsURL[animateIndex]}
@@ -74,18 +72,10 @@ export default function Preview() {
                 draggable="false"
               />
             </div>
-            <p className="mt-4 text-sm text-gray-400">动态预览</p>
-            {/* <div className="flex items-center gap-2 mt-4 text-sm">
-              <span>速度</span>
-              <input
-                type="range"
-                min={1}
-                max={10}
-                value={speed}
-                onChange={handleSpeedChange}
-                className="w-24 accent-white"
-              />
-            </div> */}
+            <div className="preview-speed-slider mt-2 w-[200px]">
+              <Slider min={0} max={30} value={frameRate} onChange={handleFrameRateChange} />
+            </div>
+            <p className="mt-2 text-sm text-gray-400">动态预览（帧率：{frameRate} FPS）</p>
           </div>
         </div>
       )}
