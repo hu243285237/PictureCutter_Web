@@ -15,22 +15,22 @@
   "dependencies": {
     "antd": "^6.3.0",
     "file-saver": "^2.0.5",
-    "jspdf": "^2.5.1",
+    "jspdf": "^4.1.0",
     "jszip": "^3.10.1",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.18",
-    "@types/file-saver": "^2.0.5",
-    "@types/node": "^20.0.0",
-    "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.0",
-    "@vitejs/plugin-react": "^4.2.1",
+    "@types/file-saver": "^2.0.7",
+    "@types/node": "^25.2.3",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.4",
     "prettier": "^3.8.1",
     "standard-version": "^9.5.0",
     "tailwindcss": "^4.1.18",
-    "typescript": "^5.2.2",
-    "vite": "^5.4.10"
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1"
   }
 }
