@@ -28,20 +28,19 @@ jobs:
           # black_list: "repo_name,repo_name2"
           # white_list: "PictureCutter_Web"
 
-      # 等待 Gitee 同步完成后再触发 Pages，避免拿到非 Pages 页面导致 CSRF 解析失败
-      - name: Wait for Gitee sync
-        run: sleep 30
-
       - name: Gitee Pages Action
-        # 触发 Gitee 从 gh-pages 分支重新部署 Pages（需在 Gitee 仓库设置里先开启 Gitee Pages）
+        # You may pin to the exact commit or the version.
         uses: yanglbme/gitee-pages-action@v1.4.1
         with:
+          # The Gitee username, like yanglbme
           gitee-username: hu243285237
+          # The Gitee password
           gitee-password: ${{ secrets.GITEE_PASSWORD }}
-          # 仓库路径：Gitee 地址栏多为小写，若仍报错请到 gitee.com 查看实际仓库 URL
-          gitee-repo: hu243285237/picturecutter_web
+          # The Gitee repository, like doocs/leetcode
+          gitee-repo: hu243285237/PictureCutter_Web
+          # Which branch to build
           branch: gh-pages
           # Which directory to build
-          # directory: # optional, default is
+          directory: dist
           # Use force https or not
           # https: # optional, default is true
