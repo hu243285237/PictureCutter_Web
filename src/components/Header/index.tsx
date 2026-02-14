@@ -29,7 +29,7 @@ export default function () {
       {/* 标题 */}
       <h1 className="my-6 text-[52px] font-bold">PICTURE CUTTER</h1>
       {/* 描述 */}
-      <p className="my-4 text-[18px]">一个将长图片自动分段切割的工具</p>
+      <p className="my-4 text-[18px]">一个将图片分段切割的工具</p>
       {/* 导航 */}
       <div className="flex gap-4 mb-4">
         {navItems.map((item) => (

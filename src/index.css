@@ -1,29 +1,11 @@
 @import 'tailwindcss';
 
 body {
-  margin: 0;
-  min-height: 100vh;
-  /* 渐变高度固定为 100vh 并纵向重复，body 变高时只多出相同图案，不会重绘导致突变 */
+  position: relative;
+  color: #f0f8ff;
   background: linear-gradient(to bottom, #0a0f1a 0%, #151b2e 50%, #0a0f1a 100%);
   background-size: 100% 100vh;
   background-repeat: repeat-y;
-  color: #f0f8ff;
-  position: relative;
-}
-
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image:
-    linear-gradient(rgba(148, 163, 184, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(148, 163, 184, 0.02) 1px, transparent 1px);
-  background-size: 50px 50px;
-  pointer-events: none;
-  z-index: 0;
 }
 
 body::after {
@@ -49,22 +31,5 @@ body::after {
       rgba(236, 72, 153, 0.05) 0%,
       transparent 50%
     );
-  animation: gradient-shift 20s ease infinite;
   pointer-events: none;
-  z-index: 0;
-}
-
-@keyframes gradient-shift {
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-  50% {
-    transform: translate(-5%, -5%) scale(1.1);
-  }
-}
-
-#root {
-  position: relative;
-  z-index: 1;
 }
