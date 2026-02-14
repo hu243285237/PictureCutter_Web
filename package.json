@@ -7,7 +7,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "patch": "standard-version --release-as patch && git push --follow-tags origin master",
+    "minor": "standard-version --release-as minor && git push --follow-tags origin master",
+    "major": "standard-version --release-as major && git push --follow-tags origin master"
   },
   "dependencies": {
     "antd": "^6.3.0",
@@ -25,6 +28,7 @@
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^4.2.1",
     "prettier": "^3.8.1",
+    "standard-version": "^9.5.0",
     "tailwindcss": "^4.1.18",
     "typescript": "^5.2.2",
     "vite": "^5.4.10"
