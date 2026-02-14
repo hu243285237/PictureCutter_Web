@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/hu243285237/PictureCutter_Web/compare/v2.0.10...v2.1.0) (2026-02-14)
+
+
+### Features
+
+* enhance preview component with adjustable frame rate slider and update related styles ([8b5552c](https://github.com/hu243285237/PictureCutter_Web/commit/8b5552c5378d178b5d67f2ab222c2c264c32ed6b))
+
 ### [2.0.10](https://github.com/hu243285237/PictureCutter_Web/compare/v2.0.9...v2.0.10) (2026-02-14)
 
 ### [2.0.9](https://github.com/hu243285237/PictureCutter_Web/compare/v2.0.8...v2.0.9) (2026-02-14)
