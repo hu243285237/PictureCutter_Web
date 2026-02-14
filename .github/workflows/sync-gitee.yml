@@ -1,12 +1,9 @@
-name: Gitee repos mirror periodic job
+name: Sync Gitee
 
 on:
-  # 打 tag 时触发，与 Node.js CI 一致：先构建部署到 GitHub Pages，再同步到 Gitee
   push:
     tags:
       - '*'
-  # 如需手动触发可取消下行注释
-  # workflow_dispatch:
 
 jobs:
   build:

@@ -1,7 +1,4 @@
-# 本地打 tag 后推送，CI 在收到 tag 时触发：构建并部署到 GitHub Pages
-# 使用方式：git tag v1.0.0 && git push origin v1.0.0
-
-name: Node.js CI
+name: Build Page
 
 on:
   push:
