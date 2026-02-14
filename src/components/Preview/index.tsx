@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useAppContext } from '../../contexts';
 import Step from '../Step';
 
@@ -52,7 +52,7 @@ export default function Preview() {
         <div className="flex flex-row gap-10">
           {/* 静态预览 */}
           <div className="flex flex-col items-center">
-            <li className="flex p-2.5 h-[150px] w-[400px] max-w-full bg-[#f0f8ff] rounded-lg border border-dashed overflow-x-scroll">
+            <li className="flex items-center p-2.5 h-[150px] w-[400px] max-w-full bg-[#f0f8ff] rounded-lg border-2 overflow-x-scroll">
               {cutImgsURL.map((item, index) => (
                 <img
                   className="mx-2 max-h-full max-w-full shadow-[2px_2px_6px_2px_rgba(100,100,100,0.5)]"
@@ -69,7 +69,7 @@ export default function Preview() {
           </div>
           {/* 动态预览 */}
           <div className="flex flex-col items-center">
-            <div className="flex justify-center items-center p-2.5 h-[150px] w-[150px] bg-[#f0f8ff] rounded-lg border border-dashed">
+            <div className="flex justify-center items-center p-2.5 h-[150px] w-[150px] rounded-lg border-2 bg-[#f0f8ff]">
               <img
                 className="max-h-full max-w-full shadow-[2px_2px_6px_2px_rgba(100,100,100,0.5)]"
                 src={cutImgsURL[animateIndex]}

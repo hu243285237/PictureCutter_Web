@@ -44,7 +44,7 @@ export default function ImageImport() {
     <Step step={1} title="导入">
       {/* 图片区域 */}
       <div
-        className="flex flex-col items-center justify-center mb-4 h-[200px] w-[400px] rounded-lg border border-dashed cursor-pointer"
+        className="flex flex-col items-center justify-center mb-4 p-2.5 h-[200px] w-[400px] rounded-lg border border-dashed cursor-pointer"
         ref={areaRef}
         onClick={handleAreaClick}
       >
