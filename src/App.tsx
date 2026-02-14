@@ -1,8 +1,8 @@
+import Export from './components/Export';
 import Header from './components/Header';
 import ImageImport from './components/ImageImport';
 import Option from './components/Option';
 import Preview from './components/Preview';
-import Export from './components/Export';
 import { AppProvider, useAppContext } from './contexts/app';
 
 /**

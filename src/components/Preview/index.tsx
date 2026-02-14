@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useAppContext } from '../../contexts';
 import Step from '../Step';
 
@@ -12,8 +12,7 @@ export default function Preview() {
   const prevCutImgsURLRef = useRef<string>('');
 
   useEffect(() => {
-    const currentKey =
-      cutImgsURL.length > 0 ? cutImgsURL[0] + cutImgsURL.length : '';
+    const currentKey = cutImgsURL.length > 0 ? cutImgsURL[0] + cutImgsURL.length : '';
     if (prevCutImgsURLRef.current !== currentKey) {
       prevCutImgsURLRef.current = currentKey;
       setAnimateIndex(0);
@@ -33,15 +32,13 @@ export default function Preview() {
           }
         });
       },
-      (11 - speed) * 20,
+      (11 - speed) * 20
     );
 
     return () => clearInterval(timer);
   }, [cutImgsURL.length, speed]);
 
-  const handleSpeedChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ): void => {
+  const handleSpeedChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const v = Number(event.target.value);
     if (!Number.isNaN(v)) setSpeed(v);
   };

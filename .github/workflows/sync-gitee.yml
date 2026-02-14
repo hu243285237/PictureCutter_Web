@@ -3,7 +3,7 @@ name: Sync Gitee
 on:
   push:
     tags:
-      - '*'
+      - "*"
 
 jobs:
   mirror:
@@ -17,4 +17,4 @@ jobs:
           dst: gitee/hu243285237
           dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
           dst_token: ${{ secrets.GITEE_TOKEN }}
-          static_list: 'PictureCutter_Web'
+          static_list: "PictureCutter_Web"

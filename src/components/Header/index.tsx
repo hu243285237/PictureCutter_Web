@@ -1,23 +1,23 @@
 import config from '../../../package.json';
 import logo from '../../logo.svg';
+
 import './index.css';
 
-const navLinkClass =
-  'cursor-pointer border-b border-white hover:text-amber-100';
+const navLinkClass = 'cursor-pointer border-b border-white hover:text-amber-100';
 
 const navItems = [
   {
     label: '案例教程',
-    href: 'https://blog.csdn.net/m0_37250299/article/details/100104956',
+    href: 'https://blog.csdn.net/m0_37250299/article/details/100104956'
   },
   {
     label: '工程源码',
-    href: 'https://github.com/hu243285237/PictureCutter_Web',
+    href: 'https://github.com/hu243285237/PictureCutter_Web'
   },
   {
     label: `版本v${config.version}`,
-    href: 'https://github.com/hu243285237/PictureCutter_Web/tags',
-  },
+    href: 'https://github.com/hu243285237/PictureCutter_Web/tags'
+  }
 ];
 
 /**
@@ -33,11 +33,7 @@ export default function () {
       {/* 导航 */}
       <div className="flex gap-4 mb-4">
         {navItems.map((item) => (
-          <label
-            key={item.href}
-            className={navLinkClass}
-            onClick={() => window.open(item.href)}
-          >
+          <label key={item.href} className={navLinkClass} onClick={() => window.open(item.href)}>
             {item.label}
           </label>
         ))}

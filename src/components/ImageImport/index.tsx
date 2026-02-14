@@ -1,4 +1,4 @@
-import { type ChangeEvent, useRef, useState } from 'react';
+import { useRef, useState, type ChangeEvent } from 'react';
 import { useAppContext } from '../../contexts';
 import Step from '../Step';
 

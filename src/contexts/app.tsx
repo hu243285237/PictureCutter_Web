@@ -1,16 +1,10 @@
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  ReactNode,
-} from 'react';
-import {
-  CutMode,
-  OptionConfig,
   AppContextType,
-  DEFAULT_OPTION_CONFIG,
+  CutMode,
   DEFAULT_APP_CONTEXT_VALUE,
+  DEFAULT_OPTION_CONFIG,
+  OptionConfig
 } from '../common';
 import { amountCut, pixelCut, scaleCut } from '../utils/util';
 
@@ -33,9 +27,7 @@ export function AppProvider(props: Props) {
   const [imgFormat, setImgFormat] = useState<string>('');
   const [imgWidth, setImgWidth] = useState<number>(0);
   const [imgHeight, setImgHeight] = useState<number>(0);
-  const [optionConfig, setOptionConfig] = useState<OptionConfig>(
-    DEFAULT_OPTION_CONFIG,
-  );
+  const [optionConfig, setOptionConfig] = useState<OptionConfig>(DEFAULT_OPTION_CONFIG);
   const [cutImgsURL, setCutImgsURL] = useState<string[]>([]);
 
   useEffect(() => {
@@ -63,37 +55,19 @@ export function AppProvider(props: Props) {
     const { cutMode, pixel, amount, scale } = optionConfig;
     switch (cutMode) {
       case CutMode.PIXEL:
-        pixelCut(
-          imgURL,
-          pixel.width,
-          pixel.height,
-          imgFormat,
-          (imgsURL: string[]) => {
-            setCutImgsURL(imgsURL);
-          },
-        );
+        pixelCut(imgURL, pixel.width, pixel.height, imgFormat, (imgsURL: string[]) => {
+          setCutImgsURL(imgsURL);
+        });
         break;
       case CutMode.AMOUNT:
-        amountCut(
-          imgURL,
-          amount.row,
-          amount.col,
-          imgFormat,
-          (imgsURL: string[]) => {
-            setCutImgsURL(imgsURL);
-          },
-        );
+        amountCut(imgURL, amount.row, amount.col, imgFormat, (imgsURL: string[]) => {
+          setCutImgsURL(imgsURL);
+        });
         break;
       case CutMode.SCALE:
-        scaleCut(
-          imgURL,
-          scale.width,
-          scale.height,
-          imgFormat,
-          (imgsURL: string[]) => {
-            setCutImgsURL(imgsURL);
-          },
-        );
+        scaleCut(imgURL, scale.width, scale.height, imgFormat, (imgsURL: string[]) => {
+          setCutImgsURL(imgsURL);
+        });
         break;
       default:
         alert('选择裁剪方式错误');
@@ -108,7 +82,7 @@ export function AppProvider(props: Props) {
     optionConfig,
     cutImgsURL,
     setImgURL,
-    setOptionConfig,
+    setOptionConfig
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

@@ -3,7 +3,7 @@ name: Build Page
 on:
   push:
     tags:
-      - '*'
+      - "*"
 
 jobs:
   build:
